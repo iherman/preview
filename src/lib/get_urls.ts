@@ -40,13 +40,13 @@ function get_urls(home_repo :Repo, octocat :any) :URLs {
         .replace('{branch}', submission_branch.branch);
 
     // Get the original versions' URL, which is necessary for the diff
-    const original_version :string = constants.old_version
+    const old_version :string = constants.old_version
         .replace('{owner}',home_repo.owner)
         .replace('{repo}',home_repo.repo);
 
     return {
         new  : new_version,
-        diff : ''
+        diff : constants.html_diff.replace('{old}', old_version).replace('{new}',new_version)
     }
 }
 
@@ -60,8 +60,8 @@ export async function get_data(url :string) :Promise<URLs> {
     const pr_number :string = parsed_path[4];
     const gh_api_url = constants.gh_api
                         .replace('{owner}',home_repo.owner)
-                        .replace('{repo}',home_repo.repo);
+                        .replace('{repo}',home_repo.repo)
+                        .replace('{number}',pr_number);
     const octocat :any = await fetch.fetch_json(gh_api_url);
-
     return get_urls(home_repo, octocat);
 }

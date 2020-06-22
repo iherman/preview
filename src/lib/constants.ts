@@ -3,7 +3,14 @@ const githack :string    = 'https://raw.githack.com/{owner}/{repo}/{branch}/inde
 
 export const new_version = statically;
 export const old_version = 'https://{owner}.github.io/{repo}/';
-export const gh_api      = 'https://api.github.com/repos/{owner}/{repo}/pulls/57';
+export const gh_api      = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
+export const html_diff   = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
+
+export const markdown :string = `
+* [Preview]({preview})
+* [Diff]({diff})
+`
+
 
 /**
  * Flag to decide whether the code runs in a browser or in node.js
