@@ -5,8 +5,11 @@ export const new_version = statically;
 export const old_version = 'https://{owner}.github.io/{repo}/';
 export const gh_api      = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
 export const html_diff   = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
+export const spec_gen    = 'https://labs.w3.org/spec-generator/?type=respec&url={url}'
 
 export const markdown :string = `
+See:
+
 * [Preview]({preview})
 * [Diff]({diff})
 `

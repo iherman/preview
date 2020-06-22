@@ -2,6 +2,7 @@ import * as constants from  './constants';
 import * as fetch      from './fetch';
 import * as urlHandler from 'url';
 
+
 interface Repo {
     owner :string;
     repo  :string;
@@ -20,7 +21,10 @@ export interface URLs {
  * Generate all the URLs based on the JSON data of the PR. That JSON data is the one
  * returned by the Github API
  */
-function get_urls(home_repo :Repo, octocat :any) :URLs {
+function get_urls(home_repo :Repo, octocat :any, respec :boolean) :URLs {
+    const encodeurl = (url :string) :string => {
+        return url.replace(/\?/g,'%3F').replace(/\&/g,'%26')
+    }
     // Get the data for the repository of the submission
     const head_repo = octocat.head.repo.full_name.split('/');
     const submission_repo :Repo = {
@@ -44,13 +48,16 @@ function get_urls(home_repo :Repo, octocat :any) :URLs {
         .replace('{owner}',home_repo.owner)
         .replace('{repo}',home_repo.repo);
 
+    const new_spec = respec ? encodeurl(constants.spec_gen.replace('{url}', new_version)) : new_version;
+    const old_spec = respec ? encodeurl(constants.spec_gen.replace('{url}', old_version)) : old_version;
+
     return {
         new  : new_version,
-        diff : constants.html_diff.replace('{old}', old_version).replace('{new}',new_version)
+        diff : constants.html_diff.replace('{old}',old_spec).replace('{new}', new_spec)
     }
 }
 
-export async function get_data(url :string) :Promise<URLs> {
+export async function get_data(url :string, respec :boolean = false) :Promise<URLs> {
     // The URL is the url for the PR.
     const parsed_path = urlHandler.parse(url).path.split('/');
     const home_repo :Repo = {
@@ -63,5 +70,5 @@ export async function get_data(url :string) :Promise<URLs> {
                         .replace('{repo}',home_repo.repo)
                         .replace('{number}',pr_number);
     const octocat :any = await fetch.fetch_json(gh_api_url);
-    return get_urls(home_repo, octocat);
+    return get_urls(home_repo, octocat, respec);
 }

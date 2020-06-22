@@ -7,7 +7,7 @@
   "description": "Generation of preview URL-s for a PR",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc; (cd dist; browserify browser.js > ../docs/assets/js/preview.js)",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/iherman/preview#readme",
   "dependencies": {
+    "commander": "^5.1.0",
     "node-fetch": "^2.6.0",
     "url": "^0.11.0"
   },
