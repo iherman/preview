@@ -2,18 +2,16 @@
 <html>
     <head>
         <meta charset='utf-8'>
-        <title>preview — poor man's preview statements for PR-s</title>
+        <title>preview — preview statements for PR-s</title>
         <link rel='stylesheet' href='./assets/css/preview.css'/>
         <script type='text/javascript' src='./assets/js/preview.js'></script>
     </head>
     <body>
         <header>
-            <h1>preview — poor man's preview statements for PR-s</h1>
+            <h1>preview — preview statements for PR-s</h1>
         </header>
         <main>
-            <p>This form generates markdown snippet that can be added to the PR comment manually to provide a preview of the new version as well as a diff file. It is poor man's version of the more 'official' PR-preview facility, in case the latter does not work...</p>
-
-            <p>(Note the the current version works only with ReSpec and plain HTML document. I am not sure how a preview version of Bikeshed should be generated.)</p>
+            <p>This form generates markdown snippet that can be added to the PR comment manually to provide a preview of the new version as well as a diff file. It is poor man’s alternative to the more elaborate PR-preview Github App, in case the latter is down…</p>
 
             <div id='form'>
                 <label for="url">URL: </label> <input name="url" id="url" size="60" type="text"><br>
@@ -21,6 +19,10 @@
                 <label for="markdown">Use this in your Github comment:</label> <br/> <textarea rows=10 cols=120 name=markdown id=markdown wrap=soft></textarea>
                 <br/><button id='go'>Go!</button><br/>
             </div>
+            <p>(Note the the current version works only with ReSpec and plain HTML document. I am not sure how a preview version of Bikeshed should be generated.)</p>
         </main>
+        <footer class='copyright'>
+            <p >This client runs the <a href='https://github.com/iherman/preview/'>preview</a> script, published on GitHub. Copyright © 2020 <a href='https://www.ivan-herman.net/'>Ivan Herman</a>. </p>
+        </footer>
     </body>
 </html>
