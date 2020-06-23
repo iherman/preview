@@ -5,6 +5,17 @@
         <title>preview — preview statements for PR-s</title>
         <link rel='stylesheet' href='./assets/css/preview.css'/>
         <script type='text/javascript' src='./assets/js/preview.js'></script>
+        <style>
+            #form {
+                display: grid;
+                grid-template-columns: 15em auto;
+                grid-gap: 0.5em;
+                align-items: center;
+            }
+            button#go {
+                grid-column: span 2
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -14,10 +25,14 @@
             <p>This form generates markdown snippet that can be added to the PR comment manually to provide a preview of the new version as well as a diff file. It is poor man’s alternative to the more elaborate PR-preview Github App, in case the latter is down…</p>
 
             <div id='form'>
-                <label for="url">URL: </label> <input name="url" id="url" size="60" type="text"><br>
-                <label for="respec">Plain HTML file? </label> <input name="text" id="text" type="checkbox" required><br>
-                <label for="markdown">Use this in your Github comment:</label> <br/> <textarea rows=10 cols=120 name=markdown id=markdown wrap=soft></textarea>
-                <br/><button id='go'>Go!</button><br/>
+                <label for="url">URL: </label> <input name="url" id="url" size="60" type="text">
+
+                <label for="respec">Plain HTML file? </label> <input name="text" id="text" type="checkbox" required>
+
+                <label for="markdown">Use this in your Github comment:</label>
+                <textarea rows=10 name=markdown id=markdown wrap=soft></textarea>
+
+                <button id='go'>Go!</button>
             </div>
             <p>(Note the the current version works only with ReSpec and plain HTML document. I am not sure how a preview version of Bikeshed should be generated.)</p>
         </main>
