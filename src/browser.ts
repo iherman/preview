@@ -1,22 +1,23 @@
-import * as get_urls from './lib/get_urls';
-import * as constants from './lib/constants'
-
-async function dummy(e :Event) {
-    const URLs :get_urls.URLs = await get_urls.get_data('http://example.org', true);
-}
+import * as preview_links from './lib/preview_links';
 
 async function main(e :Event) {
-    const url      = document.getElementById('url')  as HTMLInputElement;
-    const text     = document.getElementById('text') as HTMLInputElement;
-    const respec   = !text.checked
-    const markdown = document.getElementById('markdown') as HTMLTextAreaElement;
+    try {
+        // Get the data from the HTML
+        const url      = document.getElementById('url')  as HTMLInputElement;
 
+        // This is the flag on whether this is a pure html file or a ReSpec
+        const text     = document.getElementById('text') as HTMLInputElement;
+        const respec   = !text.checked
 
-    const URLs :get_urls.URLs = await get_urls.get_data(url.value, respec);
+        // This is the place for the generated output
+        const markdown = document.getElementById('markdown') as HTMLTextAreaElement;
 
-    const result :string = constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff);
-
-    markdown.value = result;
+        // Get the preview data and generate a markdown snippet
+        const URLs :preview_links.URLs = await preview_links.get_data(url.value, respec);
+        markdown.value = preview_links.constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff);
+    } catch(e) {
+        alert(`preview error: ${e}`);
+    }
 }
 
 window.addEventListener('load', () => {

@@ -20,58 +20,32 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const get_urls = __importStar(require("./lib/get_urls"));
-const constants = __importStar(require("./lib/constants"));
-async function dummy(e) {
-    const URLs = await get_urls.get_data('http://example.org', true);
-}
+const preview_links = __importStar(require("./lib/preview_links"));
 async function main(e) {
-    const url = document.getElementById('url');
-    const text = document.getElementById('text');
-    const respec = !text.checked;
-    const markdown = document.getElementById('markdown');
-    const URLs = await get_urls.get_data(url.value, respec);
-    const result = constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff);
-    markdown.value = result;
+    try {
+        // Get the data from the HTML
+        const url = document.getElementById('url');
+        // This is the flag on whether this is a pure html file or a ReSpec
+        const text = document.getElementById('text');
+        const respec = !text.checked;
+        // This is the place for the generated output
+        const markdown = document.getElementById('markdown');
+        // Get the preview data and generate a markdown snippet
+        const URLs = await preview_links.get_data(url.value, respec);
+        markdown.value = preview_links.constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff);
+    }
+    catch (e) {
+        alert(`preview error: ${e}`);
+    }
 }
 window.addEventListener('load', () => {
     const go_button = document.getElementById('go');
     go_button.addEventListener('click', main);
 });
 
-},{"./lib/constants":2,"./lib/get_urls":4}],2:[function(require,module,exports){
+},{"./lib/preview_links":2}],2:[function(require,module,exports){
 (function (process){
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.is_browser = exports.markdown = exports.spec_gen = exports.html_diff = exports.gh_api = exports.old_version = exports.new_version = void 0;
-const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/index.html';
-const githack = 'https://raw.githack.com/{owner}/{repo}/{branch}/index.html';
-exports.new_version = statically;
-exports.old_version = 'https://{owner}.github.io/{repo}/';
-exports.gh_api = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
-exports.html_diff = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
-exports.spec_gen = 'https://labs.w3.org/spec-generator/?type=respec&url={url}';
-exports.markdown = `
-See:
-
-* [Preview]({preview})
-* [Diff]({diff})
-`;
-/**
- * Flag to decide whether the code runs in a browser or in node.js
- */
-exports.is_browser = (process === undefined || process.title === 'browser');
-
-}).call(this,require('_process'))
-},{"_process":6}],3:[function(require,module,exports){
-"use strict";
-/**
- * ## Fetch
- *
- * Wrappers around the fetch function.
- *
- * @packageDocumentation
- */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -92,13 +66,29 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetch_json = void 0;
-/**
-*
-*
-*/
+exports.get_data = exports.constants = void 0;
+var constants;
+(function (constants) {
+    const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/index.html';
+    const githack = 'https://raw.githack.com/{owner}/{repo}/{branch}/index.html';
+    constants.new_version = statically;
+    constants.old_version = 'https://{owner}.github.io/{repo}/';
+    constants.gh_api = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
+    constants.html_diff = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
+    constants.spec_gen = 'https://labs.w3.org/spec-generator/?type=respec&url={url}';
+    constants.markdown = `
+See:
+
+* [Preview]({preview})
+* [Diff]({diff})
+`;
+    /**
+     * Flag to decide whether the code runs in a browser or in node.js
+     */
+    constants.is_browser = (process === undefined || process.title === 'browser');
+})(constants = exports.constants || (exports.constants = {}));
+/* ======================================= Interface to Fetch ========================= */
 const node_fetch = __importStar(require("node-fetch"));
-const constants = __importStar(require("./constants"));
 /**
  * The effective fetch implementation run by the rest of the code.
  *
@@ -108,45 +98,20 @@ const constants = __importStar(require("./constants"));
  * This variable is a simple, polyfill like switch between the two, relying on the existence (or not) of the
  * `process` variable (built-in for `node.js`).
  *
- * I guess this makes this entry a bit polyfill like:-)
  */
 const my_fetch = constants.is_browser ? fetch : node_fetch.default;
-async function fetch_json(resource_url) {
-    const response = await my_fetch(resource_url);
-    return await response.json();
-}
-exports.fetch_json = fetch_json;
-
-},{"./constants":2,"node-fetch":5}],4:[function(require,module,exports){
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.get_data = void 0;
-const constants = __importStar(require("./constants"));
-const fetch = __importStar(require("./fetch"));
 /**
  * Generate all the URLs based on the JSON data of the PR. That JSON data is the one
  * returned by the Github API
+ *
+ * @param main_repo - identification of the main repo, ie, the target of the PR
+ * @param octocat - the data returned by the Github API for the PR
+ * @param respec - whether the sources are to be encapsulated into a spec generator call for respec in the html diff
  */
-function get_urls(home_repo, octocat, respec) {
+function get_urls(main_repo, octocat, respec) {
+    /**
+    * The URL used in the spec generator must be percent encoded
+    */
     const encodeurl = (url) => {
         return url.replace(/\?/g, '%3F').replace(/\&/g, '%26');
     };
@@ -160,15 +125,17 @@ function get_urls(home_repo, octocat, respec) {
     const submission_branch = {
         branch: octocat.head.ref
     };
-    // Get the new versions' URL
+    // Get the new version's URL
     const new_version = constants.new_version
         .replace('{owner}', submission_repo.owner)
         .replace('{repo}', submission_repo.repo)
         .replace('{branch}', submission_branch.branch);
-    // Get the original versions' URL, which is necessary for the diff
+    // Get the original versions' URL (used for the diff)
     const old_version = constants.old_version
-        .replace('{owner}', home_repo.owner)
-        .replace('{repo}', home_repo.repo);
+        .replace('{owner}', main_repo.owner)
+        .replace('{repo}', main_repo.repo);
+    // If we the sources are in ReSpec, the URLs used in the HTML diff must be a call out to the spec generator
+    // to generate the final HTML on the fly. Note that the URLs must be percent encoded.
     const new_spec = respec ? encodeurl(constants.spec_gen.replace('{url}', new_version)) : new_version;
     const old_spec = respec ? encodeurl(constants.spec_gen.replace('{url}', old_version)) : old_version;
     return {
@@ -176,7 +143,23 @@ function get_urls(home_repo, octocat, respec) {
         diff: constants.html_diff.replace('{old}', old_spec).replace('{new}', new_spec)
     };
 }
-async function get_data(url, respec = false) {
+/**
+ * Get the preview and html diff URLs for a PR.
+ *
+ * @async
+ * @param url - URL of the PR
+ * @param respec - Flag whether the documents are in ReSpec, ie, should be converted before establish the diffs
+ */
+async function get_data(url, respec = true) {
+    /**
+     *
+     * The standard idiom to get JSON data via fetch
+     * @async
+     */
+    const fetch_json = async (resource_url) => {
+        const response = await my_fetch(resource_url);
+        return await response.json();
+    };
     // The URL for the PR.
     const parsed_path = new URL(url).pathname.split('/');
     const home_repo = {
@@ -188,12 +171,13 @@ async function get_data(url, respec = false) {
         .replace('{owner}', home_repo.owner)
         .replace('{repo}', home_repo.repo)
         .replace('{number}', pr_number);
-    const octocat = await fetch.fetch_json(gh_api_url);
+    const octocat = await fetch_json(gh_api_url);
     return get_urls(home_repo, octocat, respec);
 }
 exports.get_data = get_data;
 
-},{"./constants":2,"./fetch":3}],5:[function(require,module,exports){
+}).call(this,require('_process'))
+},{"_process":4,"node-fetch":3}],3:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -219,7 +203,7 @@ exports.Headers = global.Headers;
 exports.Request = global.Request;
 exports.Response = global.Response;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],6:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 

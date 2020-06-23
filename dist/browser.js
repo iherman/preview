@@ -19,19 +19,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const get_urls = __importStar(require("./lib/get_urls"));
-const constants = __importStar(require("./lib/constants"));
-async function dummy(e) {
-    const URLs = await get_urls.get_data('http://example.org', true);
-}
+const preview_links = __importStar(require("./lib/preview_links"));
 async function main(e) {
-    const url = document.getElementById('url');
-    const text = document.getElementById('text');
-    const respec = !text.checked;
-    const markdown = document.getElementById('markdown');
-    const URLs = await get_urls.get_data(url.value, respec);
-    const result = constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff);
-    markdown.value = result;
+    try {
+        // Get the data from the HTML
+        const url = document.getElementById('url');
+        // This is the flag on whether this is a pure html file or a ReSpec
+        const text = document.getElementById('text');
+        const respec = !text.checked;
+        // This is the place for the generated output
+        const markdown = document.getElementById('markdown');
+        // Get the preview data and generate a markdown snippet
+        const URLs = await preview_links.get_data(url.value, respec);
+        markdown.value = preview_links.constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff);
+    }
+    catch (e) {
+        alert(`preview error: ${e}`);
+    }
 }
 window.addEventListener('load', () => {
     const go_button = document.getElementById('go');

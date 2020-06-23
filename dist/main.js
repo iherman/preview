@@ -19,9 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const get_urls = __importStar(require("./lib/get_urls"));
-const constants = __importStar(require("./lib/constants"));
-/** @hidden */
+const preview_links = __importStar(require("./lib/preview_links"));
 const { program } = require('commander');
 async function main() {
     program
@@ -38,8 +36,8 @@ async function main() {
         const url = program.args[0];
         const respec = program.text === undefined;
         try {
-            const URLs = await get_urls.get_data(url, respec);
-            console.log(constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff));
+            const URLs = await preview_links.get_data(url, respec);
+            console.log(preview_links.constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff));
         }
         catch (e) {
             console.log(`preview error: ${e}`);

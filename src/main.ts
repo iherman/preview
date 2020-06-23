@@ -1,9 +1,5 @@
-import * as get_urls from './lib/get_urls';
-import * as constants from './lib/constants'
-
-/** @hidden */
+import * as preview_links from './lib/preview_links';
 const { program } = require('commander');
-
 
 async function main() {
     program
@@ -20,8 +16,8 @@ async function main() {
         const url    = program.args[0];
         const respec = program.text === undefined;
         try {
-            const URLs :get_urls.URLs = await get_urls.get_data(url, respec);
-            console.log(constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff));
+            const URLs :preview_links.URLs = await preview_links.get_data(url, respec);
+            console.log(preview_links.constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff));
         } catch(e) {
             console.log(`preview error: ${e}`);
             process.exit(-1);
