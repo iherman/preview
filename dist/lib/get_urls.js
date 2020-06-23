@@ -22,7 +22,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.get_data = void 0;
 const constants = __importStar(require("./constants"));
 const fetch = __importStar(require("./fetch"));
-const urlHandler = __importStar(require("url"));
 /**
  * Generate all the URLs based on the JSON data of the PR. That JSON data is the one
  * returned by the Github API
@@ -58,8 +57,8 @@ function get_urls(home_repo, octocat, respec) {
     };
 }
 async function get_data(url, respec = false) {
-    // The URL is the url for the PR.
-    const parsed_path = urlHandler.parse(url).path.split('/');
+    // The URL for the PR.
+    const parsed_path = new URL(url).pathname.split('/');
     const home_repo = {
         owner: parsed_path[1],
         repo: parsed_path[2]

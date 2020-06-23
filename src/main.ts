@@ -24,7 +24,7 @@ async function main() {
             console.log(constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff));
         } catch(e) {
             console.log(`preview error: ${e}`);
-            process.exit(-1)
+            process.exit(-1);
         }
     }
 }

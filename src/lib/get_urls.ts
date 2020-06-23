@@ -1,6 +1,21 @@
 import * as constants from  './constants';
-import * as fetch      from './fetch';
 
+
+/* ======================================= Interface to Fetch ========================= */
+import * as node_fetch from 'node-fetch';
+/**
+ * The effective fetch implementation run by the rest of the code.
+ *
+ * There is no default fetch implementation for `node.js`, hence the necessity to import 'node-fetch'. However, if the code
+ * runs in a browser, there is an error message whereby only the fetch implementation in the Window is acceptable.
+ *
+ * This variable is a simple, polyfill like switch between the two, relying on the existence (or not) of the
+ * `process` variable (built-in for `node.js`).
+ *
+ */
+const my_fetch: ((arg :string) => Promise<any>) = constants.is_browser ? fetch : node_fetch.default;
+
+/* ======================================= Core operations ========================= */
 
 interface Repo {
     owner :string;
@@ -57,6 +72,11 @@ function get_urls(home_repo :Repo, octocat :any, respec :boolean) :URLs {
 }
 
 export async function get_data(url :string, respec :boolean = false) :Promise<URLs> {
+    const fetch_json = async (resource_url :string) :Promise<any> => {
+        const response = await my_fetch(resource_url);
+        return await response.json();
+    }
+
     // The URL for the PR.
     const parsed_path = new URL(url).pathname.split('/');
     const home_repo :Repo = {
@@ -68,6 +88,6 @@ export async function get_data(url :string, respec :boolean = false) :Promise<UR
                         .replace('{owner}',home_repo.owner)
                         .replace('{repo}',home_repo.repo)
                         .replace('{number}',pr_number);
-    const octocat :any = await fetch.fetch_json(gh_api_url);
+    const octocat :any = await fetch_json(gh_api_url);
     return get_urls(home_repo, octocat, respec);
 }
