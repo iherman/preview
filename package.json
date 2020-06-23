@@ -22,8 +22,7 @@
   "homepage": "https://github.com/iherman/preview#readme",
   "dependencies": {
     "commander": "^5.1.0",
-    "node-fetch": "^2.6.0",
-    "url": "^0.11.0"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@types/node": "^14.0.13",

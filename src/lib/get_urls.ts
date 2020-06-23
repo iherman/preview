@@ -1,6 +1,5 @@
 import * as constants from  './constants';
 import * as fetch      from './fetch';
-import * as urlHandler from 'url';
 
 
 interface Repo {
@@ -58,8 +57,8 @@ function get_urls(home_repo :Repo, octocat :any, respec :boolean) :URLs {
 }
 
 export async function get_data(url :string, respec :boolean = false) :Promise<URLs> {
-    // The URL is the url for the PR.
-    const parsed_path = urlHandler.parse(url).path.split('/');
+    // The URL for the PR.
+    const parsed_path = new URL(url).pathname.split('/');
     const home_repo :Repo = {
         owner : parsed_path[1],
         repo  : parsed_path[2]
