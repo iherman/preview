@@ -24,7 +24,8 @@ var constants;
 (function (constants) {
     const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/index.html';
     const githack = 'https://raw.githack.com/{owner}/{repo}/{branch}/index.html';
-    constants.new_version = statically;
+    // export const new_version = statically;
+    constants.new_version = githack;
     constants.old_version = 'https://{owner}.github.io/{repo}/';
     constants.gh_api = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
     constants.html_diff = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
