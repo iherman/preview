@@ -1,7 +1,8 @@
 export namespace constants {
     const statically :string = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/index.html';
     const githack :string    = 'https://raw.githack.com/{owner}/{repo}/{branch}/index.html';
-    export const new_version = statically;
+    // export const new_version = statically;
+    export const new_version = githack;
 
     export const old_version = 'https://{owner}.github.io/{repo}/';
     export const gh_api      = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
