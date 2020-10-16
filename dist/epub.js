@@ -20,24 +20,34 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const preview_links = __importStar(require("./lib/preview_links"));
+const spec = __importStar(require("./lib/epub_data"));
 const { program } = require('commander');
+const markdown_start = `
+See:
+
+`;
+const markdown = `* For {title}:
+    * [Preview]({preview})
+    * [Diff]({diff})
+`;
 async function main() {
     program
         .name('preview')
-        .usage('[option] [pr_url')
+        .usage('[option] [pr_num')
         .description('Create a markdown snippet that can be inserted into as a PR comment for preview')
-        .option('-t, --text', 'whether the source is a plain vanilla HTML (as opposed to respec')
         .parse(process.argv);
     if (program.args.length === 0) {
-        console.error('preview error: no PR URL has been provided; exciting');
+        console.error('preview error: no PR number has been provided; exciting');
         process.exit(-1);
     }
     else {
-        const url = program.args[0];
-        const respec = program.text === undefined;
+        const url = `https://github.com/w3c/${spec.repo_name}/pull/${program.args[0]}`;
         try {
-            const URLs = await preview_links.get_data(url, respec);
-            console.log(preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff));
+            const URLs = await preview_links.get_data(url, true, spec.parts.map((part) => part.path));
+            const final = URLs.reduce((accumulator, currentValue, currentIndex) => {
+                return accumulator + markdown.replace('{title}', spec.parts[currentIndex].title).replace('{preview}', currentValue.new).replace('{diff}', currentValue.diff);
+            }, '');
+            console.log(markdown_start + final);
         }
         catch (e) {
             console.log(`preview error: ${e}`);
@@ -46,4 +56,4 @@ async function main() {
     }
 }
 main();
-//# sourceMappingURL=main.js.map
+//# sourceMappingURL=epub.js.map

@@ -16,8 +16,8 @@ async function main() {
         const url    = program.args[0];
         const respec = program.text === undefined;
         try {
-            const URLs :preview_links.URLs = await preview_links.get_data(url, respec);
-            console.log(preview_links.constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff));
+            const URLs :preview_links.URLs[] = await preview_links.get_data(url, respec);
+            console.log(preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff));
         } catch(e) {
             console.log(`preview error: ${e}`);
             process.exit(-1);

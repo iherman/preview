@@ -21,18 +21,39 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const preview_links = __importStar(require("./lib/preview_links"));
+const spec = __importStar(require("./lib/epub_data"));
+const markdown_start = `
+See:
+
+`;
+const markdown = `* For {title}:
+    * [Preview]({preview})
+    * [Diff]({diff})
+`;
 async function main(e) {
     try {
         // Get the data from the HTML
-        const url = document.getElementById('url');
-        // This is the flag on whether this is a pure html file or a ReSpec
-        const text = document.getElementById('text');
-        const respec = !text.checked;
+        const number = document.getElementById('number');
+        const url = `https://github.com/w3c/${spec.repo_name}/pull/${number.value}`;
+        // These are the possible specs
+        // find the corresponding checkbox and see if it has been checked.
+        // if yes, then the corresponding path should be used
+        const parts = spec.parts.filter((part) => {
+            const choice = document.getElementById(part.short_name);
+            if (choice === null || choice.checked === false) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        });
+        const URLs = await preview_links.get_data(url, true, parts.map((part) => part.path));
+        const final = URLs.reduce((accumulator, currentValue, currentIndex) => {
+            return accumulator + markdown.replace('{title}', parts[currentIndex].title).replace('{preview}', currentValue.new).replace('{diff}', currentValue.diff);
+        }, '');
         // This is the place for the generated output
-        const markdown = document.getElementById('markdown');
-        // Get the preview data and generate a markdown snippet
-        const URLs = await preview_links.get_data(url.value, respec);
-        markdown.value = preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff);
+        const markdown_box = document.getElementById('markdown');
+        markdown_box.value = markdown_start + final;
     }
     catch (e) {
         alert(`preview error: ${e}`);
@@ -43,7 +64,36 @@ window.addEventListener('load', () => {
     go_button.addEventListener('click', main);
 });
 
-},{"./lib/preview_links":2}],2:[function(require,module,exports){
+},{"./lib/epub_data":2,"./lib/preview_links":3}],2:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.parts = exports.repo_name = void 0;
+;
+exports.repo_name = `publ-epub-revision`;
+exports.parts = [
+    {
+        path: 'epub33/overview/index.html',
+        title: 'EPUB 3 Overview',
+        short_name: 'overview'
+    },
+    {
+        path: 'epub33/core/index.html',
+        title: 'EPUB 3.3',
+        short_name: 'core'
+    },
+    {
+        path: 'epub33/rs/index.html',
+        title: 'EPUB 3.3 Reading Systems',
+        short_name: 'rs'
+    },
+    {
+        path: 'epub33/a11/index.html',
+        title: 'EPUB Accessibility 1.1',
+        short_name: 'a11y'
+    }
+];
+
+},{}],3:[function(require,module,exports){
 (function (process){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
@@ -181,7 +231,7 @@ async function get_data(url, respec = true, paths = ['index.html']) {
 exports.get_data = get_data;
 
 }).call(this,require('_process'))
-},{"_process":4,"node-fetch":3}],3:[function(require,module,exports){
+},{"_process":5,"node-fetch":4}],4:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -209,7 +259,7 @@ exports.Headers = global.Headers;
 exports.Request = global.Request;
 exports.Response = global.Response;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 

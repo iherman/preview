@@ -20,18 +20,39 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const preview_links = __importStar(require("./lib/preview_links"));
+const spec = __importStar(require("./lib/epub_data"));
+const markdown_start = `
+See:
+
+`;
+const markdown = `* For {title}:
+    * [Preview]({preview})
+    * [Diff]({diff})
+`;
 async function main(e) {
     try {
         // Get the data from the HTML
-        const url = document.getElementById('url');
-        // This is the flag on whether this is a pure html file or a ReSpec
-        const text = document.getElementById('text');
-        const respec = !text.checked;
+        const number = document.getElementById('number');
+        const url = `https://github.com/w3c/${spec.repo_name}/pull/${number.value}`;
+        // These are the possible specs
+        // find the corresponding checkbox and see if it has been checked.
+        // if yes, then the corresponding path should be used
+        const parts = spec.parts.filter((part) => {
+            const choice = document.getElementById(part.short_name);
+            if (choice === null || choice.checked === false) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        });
+        const URLs = await preview_links.get_data(url, true, parts.map((part) => part.path));
+        const final = URLs.reduce((accumulator, currentValue, currentIndex) => {
+            return accumulator + markdown.replace('{title}', parts[currentIndex].title).replace('{preview}', currentValue.new).replace('{diff}', currentValue.diff);
+        }, '');
         // This is the place for the generated output
-        const markdown = document.getElementById('markdown');
-        // Get the preview data and generate a markdown snippet
-        const URLs = await preview_links.get_data(url.value, respec);
-        markdown.value = preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff);
+        const markdown_box = document.getElementById('markdown');
+        markdown_box.value = markdown_start + final;
     }
     catch (e) {
         alert(`preview error: ${e}`);
@@ -41,4 +62,4 @@ window.addEventListener('load', () => {
     const go_button = document.getElementById('go');
     go_button.addEventListener('click', main);
 });
-//# sourceMappingURL=browser.js.map
+//# sourceMappingURL=browser_epub.js.map

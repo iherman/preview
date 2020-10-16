@@ -22,11 +22,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.get_data = exports.constants = void 0;
 var constants;
 (function (constants) {
-    const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/index.html';
-    const githack = 'https://raw.githack.com/{owner}/{repo}/{branch}/index.html';
+    const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
+    const githack = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
     // export const new_version = statically;
     constants.new_version = githack;
-    constants.old_version = 'https://{owner}.github.io/{repo}/';
+    constants.old_version = 'https://{owner}.github.io/{repo}/{file}';
     constants.gh_api = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
     constants.html_diff = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
     constants.spec_gen = 'https://labs.w3.org/spec-generator/?type=respec&url={url}';
@@ -61,8 +61,9 @@ const my_fetch = constants.is_browser ? fetch : node_fetch.default;
  * @param main_repo - identification of the main repo, ie, the target of the PR
  * @param octocat - the data returned by the Github API for the PR
  * @param respec - whether the sources are to be encapsulated into a spec generator call for respec in the html diff
+ * @param path - the path of the file to be converted
  */
-function get_urls(main_repo, octocat, respec) {
+function get_urls(main_repo, octocat, respec, path = 'index.html') {
     /**
     * The URL used in the spec generator must be percent encoded
     */
@@ -83,11 +84,13 @@ function get_urls(main_repo, octocat, respec) {
     const new_version = constants.new_version
         .replace('{owner}', submission_repo.owner)
         .replace('{repo}', submission_repo.repo)
-        .replace('{branch}', submission_branch.branch);
+        .replace('{branch}', submission_branch.branch)
+        .replace('{file}', path);
     // Get the original versions' URL (used for the diff)
     const old_version = constants.old_version
         .replace('{owner}', main_repo.owner)
-        .replace('{repo}', main_repo.repo);
+        .replace('{repo}', main_repo.repo)
+        .replace('{file}', path);
     // If we the sources are in ReSpec, the URLs used in the HTML diff must be a call out to the spec generator
     // to generate the final HTML on the fly. Note that the URLs must be percent encoded.
     const new_spec = respec ? encodeurl(constants.spec_gen.replace('{url}', new_version)) : new_version;
@@ -104,7 +107,7 @@ function get_urls(main_repo, octocat, respec) {
  * @param url - URL of the PR
  * @param respec - Flag whether the documents are in ReSpec, ie, should be converted before establish the diffs
  */
-async function get_data(url, respec = true) {
+async function get_data(url, respec = true, paths = ['index.html']) {
     /**
      *
      * The standard idiom to get JSON data via fetch
@@ -126,7 +129,7 @@ async function get_data(url, respec = true) {
         .replace('{repo}', home_repo.repo)
         .replace('{number}', pr_number);
     const octocat = await fetch_json(gh_api_url);
-    return get_urls(home_repo, octocat, respec);
+    return paths.map((path) => get_urls(home_repo, octocat, respec, path));
 }
 exports.get_data = get_data;
 //# sourceMappingURL=preview_links.js.map
