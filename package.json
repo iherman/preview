@@ -7,7 +7,7 @@
   "description": "Generation of preview URL-s for a PR",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc; (cd dist; browserify browser.js > ../docs/assets/js/preview.js)",
+    "build": "tsc; (cd dist; browserify browser.js > ../docs/assets/js/preview.js; browserify browser_epub.js > ../docs/assets/js/preview_epub.js)",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

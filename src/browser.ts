@@ -13,8 +13,8 @@ async function main(e :Event) {
         const markdown = document.getElementById('markdown') as HTMLTextAreaElement;
 
         // Get the preview data and generate a markdown snippet
-        const URLs :preview_links.URLs = await preview_links.get_data(url.value, respec);
-        markdown.value = preview_links.constants.markdown.replace('{preview}', URLs.new).replace('{diff}', URLs.diff);
+        const URLs :preview_links.URLs[] = await preview_links.get_data(url.value, respec);
+        markdown.value = preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff);
     } catch(e) {
         alert(`preview error: ${e}`);
     }
