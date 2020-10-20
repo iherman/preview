@@ -4,7 +4,7 @@ export interface Part {
     short_name :string;
 };
 
-export const repo_name = `publ-epub-revision`;
+export const repo_name = `epub-specs`;
 
 export const parts: Part[] = [
     {

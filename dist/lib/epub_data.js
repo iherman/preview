@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parts = exports.repo_name = void 0;
 ;
-exports.repo_name = `publ-epub-revision`;
+exports.repo_name = `epub-specs`;
 exports.parts = [
     {
         path: 'epub33/overview/index.html',
