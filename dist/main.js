@@ -29,7 +29,7 @@ async function main() {
         .option('-t, --text', 'whether the source is a plain vanilla HTML (as opposed to respec')
         .parse(process.argv);
     if (program.args.length === 0) {
-        console.error('preview error: no PR URL has been provided; exciting');
+        console.error('preview error: no PR URL has been provided; exiting');
         process.exit(-1);
     }
     else {

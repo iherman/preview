@@ -10,7 +10,7 @@ async function main() {
         .parse(process.argv);
 
     if (program.args.length === 0) {
-        console.error('preview error: no PR URL has been provided; exciting')
+        console.error('preview error: no PR URL has been provided; exiting')
         process.exit(-1)
     } else {
         const url    = program.args[0];

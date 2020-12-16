@@ -20,6 +20,11 @@ exports.parts = [
         short_name: 'rs'
     },
     {
+        path: 'epub33/multi-rend/index.html',
+        title: 'EPUB Multiple-Rendition Publications 1.1',
+        short_name: 'multi-rend'
+    },
+    {
         path: 'epub33/a11/index.html',
         title: 'EPUB Accessibility 1.1',
         short_name: 'a11y'
