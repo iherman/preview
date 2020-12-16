@@ -3,8 +3,8 @@ export namespace constants {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
     const githack    = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
-    // export const new_version = statically;
-    export const new_version = githack;
+    export const new_version = statically;
+    // export const new_version = githack;
 
     export const old_version = 'https://{owner}.github.io/{repo}/{file}';
     export const gh_api      = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';

@@ -74,8 +74,8 @@ var constants;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
     const githack = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
-    // export const new_version = statically;
-    constants.new_version = githack;
+    constants.new_version = statically;
+    // export const new_version = githack;
     constants.old_version = 'https://{owner}.github.io/{repo}/{file}';
     constants.gh_api = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
     constants.html_diff = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
