@@ -28,6 +28,7 @@ async function main() {
         .usage('[option] [pr_url')
         .description('Create a markdown snippet that can be inserted into as a PR comment for preview')
         .option('-t, --text', 'whether the source is a plain vanilla HTML (as opposed to respec')
+        .option('-s, --service [service]', 'name of the service to use; value can be "githack" or "statically"')
         .parse(process.argv);
     if (program.args.length === 0) {
         console.error('preview error: no PR URL has been provided; exiting');
@@ -35,9 +36,14 @@ async function main() {
     }
     else {
         const url = program.args[0];
+        let service = program.service || 'statically';
+        if (service !== preview_links.constants.GITHACK && service !== preview_links.constants.STATICALLY) {
+            console.warn(`Unknown service ${service}; using statically`);
+            service = preview_links.constants.STATICALLY;
+        }
         const respec = program.text === undefined;
         try {
-            const URLs = await preview_links.get_data(url, respec);
+            const URLs = await preview_links.get_data(url, service, respec);
             console.log(preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff));
         }
         catch (e) {

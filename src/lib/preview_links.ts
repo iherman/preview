@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 export namespace constants {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
-    const githack    = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
-    export const new_version = statically;
-    // export const new_version = githack;
+    export const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
+    export const githack    = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
+
+    export const GITHACK    = "githack";
+    export const STATICALLY = "statically";
 
     export const old_version = 'https://{owner}.github.io/{repo}/{file}';
     export const gh_api      = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
@@ -60,10 +60,11 @@ export interface URLs {
  *
  * @param main_repo - identification of the main repo, ie, the target of the PR
  * @param octocat - the data returned by the Github API for the PR
+ * @param service - name of the caching service
  * @param respec - whether the sources are to be encapsulated into a spec generator call for respec in the html diff
  * @param path - the path of the file to be converted
  */
-function get_urls(main_repo :Repo, octocat :any, respec :boolean, path = 'index.html') :URLs {
+function get_urls(main_repo :Repo, octocat :any, service: string, respec :boolean, path = 'index.html') :URLs {
     /**
     * The URL used in the spec generator must be percent encoded
     */
@@ -84,7 +85,8 @@ function get_urls(main_repo :Repo, octocat :any, respec :boolean, path = 'index.
     }
 
     // Get the new version's URL
-    const new_version :string = constants.new_version
+    const service_url = (service === constants.GITHACK ? constants.githack : constants.statically);
+    const new_version :string = service_url
         .replace('{owner}', submission_repo.owner)
         .replace('{repo}', submission_repo.repo)
         .replace('{branch}', submission_branch.branch)
@@ -112,9 +114,10 @@ function get_urls(main_repo :Repo, octocat :any, respec :boolean, path = 'index.
  *
  * @async
  * @param url - URL of the PR
+ * @param service - name of the caching service
  * @param respec - Flag whether the documents are in ReSpec, ie, should be converted before establish the diffs
  */
-export async function get_data(url :string, respec = true, paths :string[] = ['index.html']) :Promise<URLs[]> {
+export async function get_data(url :string, service: string, respec = true, paths :string[] = ['index.html']) :Promise<URLs[]> {
     /**
      *
      * The standard idiom to get JSON data via fetch
@@ -139,5 +142,5 @@ export async function get_data(url :string, respec = true, paths :string[] = ['i
         .replace('{number}', pr_number);
     const octocat :any = await fetch_json(gh_api_url);
 
-    return paths.map((path) => get_urls(home_repo, octocat, respec, path));
+    return paths.map((path) => get_urls(home_repo, octocat, service, respec, path));
 }

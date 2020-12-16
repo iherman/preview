@@ -35,6 +35,8 @@ async function main(e) {
         // Get the data from the HTML
         const number = document.getElementById('number');
         const url = `https://github.com/w3c/${spec.repo_name}/pull/${number.value}`;
+        // Get the service name
+        const service = document.getElementById('service');
         // These are the possible specs
         // find the corresponding checkbox and see if it has been checked.
         // if yes, then the corresponding path should be used
@@ -47,7 +49,7 @@ async function main(e) {
                 return true;
             }
         });
-        const URLs = await preview_links.get_data(url, true, parts.map((part) => part.path));
+        const URLs = await preview_links.get_data(url, service.value, true, parts.map((part) => part.path));
         const final = URLs.reduce((accumulator, currentValue, currentIndex) => {
             return accumulator + markdown.replace('{title}', parts[currentIndex].title).replace('{preview}', currentValue.new).replace('{diff}', currentValue.diff);
         }, '');

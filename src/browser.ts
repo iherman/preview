@@ -6,6 +6,9 @@ async function main(e: Event) {
         // Get the data from the HTML
         const url      = document.getElementById('url') as HTMLInputElement;
 
+        // Get the service name
+        const service  = document.getElementById('service') as HTMLSelectElement;
+
         // This is the flag on whether this is a pure html file or a ReSpec
         const text     = document.getElementById('text') as HTMLInputElement;
         const respec   = !text.checked
@@ -14,7 +17,7 @@ async function main(e: Event) {
         const markdown = document.getElementById('markdown') as HTMLTextAreaElement;
 
         // Get the preview data and generate a markdown snippet
-        const URLs :preview_links.URLs[] = await preview_links.get_data(url.value, respec);
+        const URLs :preview_links.URLs[] = await preview_links.get_data(url.value, service.value, respec);
         markdown.value = preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff);
     } catch (err) {
         alert(`preview error: ${err}`);

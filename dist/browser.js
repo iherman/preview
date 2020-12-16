@@ -25,13 +25,15 @@ async function main(e) {
     try {
         // Get the data from the HTML
         const url = document.getElementById('url');
+        // Get the service name
+        const service = document.getElementById('service');
         // This is the flag on whether this is a pure html file or a ReSpec
         const text = document.getElementById('text');
         const respec = !text.checked;
         // This is the place for the generated output
         const markdown = document.getElementById('markdown');
         // Get the preview data and generate a markdown snippet
-        const URLs = await preview_links.get_data(url.value, respec);
+        const URLs = await preview_links.get_data(url.value, service.value, respec);
         markdown.value = preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff);
     }
     catch (err) {

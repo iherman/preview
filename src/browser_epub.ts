@@ -19,6 +19,9 @@ async function main(e: Event) {
         const number   = document.getElementById('number') as HTMLInputElement;
         const url      = `https://github.com/w3c/${spec.repo_name}/pull/${number.value}`;
 
+        // Get the service name
+        const service  = document.getElementById('service') as HTMLSelectElement;
+
         // These are the possible specs
         // find the corresponding checkbox and see if it has been checked.
         // if yes, then the corresponding path should be used
@@ -31,7 +34,7 @@ async function main(e: Event) {
             }
         });
 
-        const URLs :preview_links.URLs[] = await preview_links.get_data(url, true, parts.map((part) => part.path));
+        const URLs :preview_links.URLs[] = await preview_links.get_data(url, service.value, true, parts.map((part) => part.path));
         const final = URLs.reduce((accumulator: string, currentValue: preview_links.URLs, currentIndex: number): string => {
             return accumulator + markdown.replace('{title}', parts[currentIndex].title).replace('{preview}', currentValue.new).replace('{diff}', currentValue.diff);
         }, '');
