@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 export namespace constants {
-    const statically :string = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
-    const githack :string    = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
+    const githack    = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
     // export const new_version = statically;
     export const new_version = githack;
 
@@ -9,7 +11,7 @@ export namespace constants {
     export const html_diff   = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
     export const spec_gen    = 'https://labs.w3.org/spec-generator/?type=respec&url={url}'
 
-    export const markdown :string = `
+    export const markdown = `
 See:
 
 * [Preview]({preview})
@@ -40,7 +42,7 @@ const my_fetch: ((arg :string) => Promise<any>) = constants.is_browser ? fetch :
 
 interface Repo {
     owner :string;
-    repo  :string;
+    repo :string;
 }
 
 interface Branch {
@@ -48,8 +50,8 @@ interface Branch {
 }
 
 export interface URLs {
-    new       :string;
-    diff      :string;
+    new :string;
+    diff :string;
 }
 
 /**
@@ -61,7 +63,7 @@ export interface URLs {
  * @param respec - whether the sources are to be encapsulated into a spec generator call for respec in the html diff
  * @param path - the path of the file to be converted
  */
-function get_urls(main_repo :Repo, octocat :any, respec :boolean, path :string = 'index.html') :URLs {
+function get_urls(main_repo :Repo, octocat :any, respec :boolean, path = 'index.html') :URLs {
     /**
     * The URL used in the spec generator must be percent encoded
     */
@@ -73,26 +75,26 @@ function get_urls(main_repo :Repo, octocat :any, respec :boolean, path :string =
     const head_repo = octocat.head.repo.full_name.split('/');
     const submission_repo :Repo = {
         owner : head_repo[0],
-        repo  : head_repo[1]
+        repo  : head_repo[1],
     };
 
     // Get the data for the submission branch
     const submission_branch :Branch = {
-        branch : octocat.head.ref
+        branch : octocat.head.ref,
     }
 
     // Get the new version's URL
     const new_version :string = constants.new_version
-        .replace('{owner}',  submission_repo.owner)
-        .replace('{repo}',   submission_repo.repo)
+        .replace('{owner}', submission_repo.owner)
+        .replace('{repo}', submission_repo.repo)
         .replace('{branch}', submission_branch.branch)
-        .replace('{file}',   path);
+        .replace('{file}', path);
 
     // Get the original versions' URL (used for the diff)
     const old_version :string = constants.old_version
         .replace('{owner}', main_repo.owner)
-        .replace('{repo}',  main_repo.repo)
-        .replace('{file}',  path);
+        .replace('{repo}', main_repo.repo)
+        .replace('{file}', path);
 
     // If we the sources are in ReSpec, the URLs used in the HTML diff must be a call out to the spec generator
     // to generate the final HTML on the fly. Note that the URLs must be percent encoded.
@@ -112,7 +114,7 @@ function get_urls(main_repo :Repo, octocat :any, respec :boolean, path :string =
  * @param url - URL of the PR
  * @param respec - Flag whether the documents are in ReSpec, ie, should be converted before establish the diffs
  */
-export async function get_data(url :string, respec :boolean = true, paths :string[] = ['index.html']) :Promise<URLs[]> {
+export async function get_data(url :string, respec = true, paths :string[] = ['index.html']) :Promise<URLs[]> {
     /**
      *
      * The standard idiom to get JSON data via fetch
@@ -127,14 +129,14 @@ export async function get_data(url :string, respec :boolean = true, paths :strin
     const parsed_path = new URL(url).pathname.split('/');
     const home_repo :Repo = {
         owner : parsed_path[1],
-        repo  : parsed_path[2]
+        repo  : parsed_path[2],
     };
     const pr_number :string = parsed_path[4];
 
     const gh_api_url = constants.gh_api
-                        .replace('{owner}' , home_repo.owner)
-                        .replace('{repo}'  , home_repo.repo)
-                        .replace('{number}', pr_number);
+        .replace('{owner}', home_repo.owner)
+        .replace('{repo}', home_repo.repo)
+        .replace('{number}', pr_number);
     const octocat :any = await fetch_json(gh_api_url);
 
     return paths.map((path) => get_urls(home_repo, octocat, respec, path));

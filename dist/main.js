@@ -20,6 +20,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const preview_links = __importStar(require("./lib/preview_links"));
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { program } = require('commander');
 async function main() {
     program

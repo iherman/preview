@@ -20,6 +20,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const preview_links = __importStar(require("./lib/preview_links"));
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function main(e) {
     try {
         // Get the data from the HTML
@@ -33,8 +34,8 @@ async function main(e) {
         const URLs = await preview_links.get_data(url.value, respec);
         markdown.value = preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff);
     }
-    catch (e) {
-        alert(`preview error: ${e}`);
+    catch (err) {
+        alert(`preview error: ${err}`);
     }
 }
 window.addEventListener('load', () => {

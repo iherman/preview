@@ -1,4 +1,5 @@
 import * as preview_links from './lib/preview_links';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { program } = require('commander');
 
 async function main() {
@@ -18,7 +19,7 @@ async function main() {
         try {
             const URLs :preview_links.URLs[] = await preview_links.get_data(url, respec);
             console.log(preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff));
-        } catch(e) {
+        } catch (e) {
             console.log(`preview error: ${e}`);
             process.exit(-1);
         }

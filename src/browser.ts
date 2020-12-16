@@ -1,9 +1,10 @@
 import * as preview_links from './lib/preview_links';
 
-async function main(e :Event) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function main(e: Event) {
     try {
         // Get the data from the HTML
-        const url      = document.getElementById('url')  as HTMLInputElement;
+        const url      = document.getElementById('url') as HTMLInputElement;
 
         // This is the flag on whether this is a pure html file or a ReSpec
         const text     = document.getElementById('text') as HTMLInputElement;
@@ -15,8 +16,8 @@ async function main(e :Event) {
         // Get the preview data and generate a markdown snippet
         const URLs :preview_links.URLs[] = await preview_links.get_data(url.value, respec);
         markdown.value = preview_links.constants.markdown.replace('{preview}', URLs[0].new).replace('{diff}', URLs[0].diff);
-    } catch(e) {
-        alert(`preview error: ${e}`);
+    } catch (err) {
+        alert(`preview error: ${err}`);
     }
 }
 

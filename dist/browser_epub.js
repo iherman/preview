@@ -29,6 +29,7 @@ const markdown = `* For {title}:
     * [Preview]({preview})
     * [Diff]({diff})
 `;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function main(e) {
     try {
         // Get the data from the HTML
@@ -54,8 +55,8 @@ async function main(e) {
         const markdown_box = document.getElementById('markdown');
         markdown_box.value = markdown_start + final;
     }
-    catch (e) {
-        alert(`preview error: ${e}`);
+    catch (err) {
+        alert(`preview error: ${err}`);
     }
 }
 window.addEventListener('load', () => {

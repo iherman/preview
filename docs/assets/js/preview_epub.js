@@ -30,6 +30,7 @@ const markdown = `* For {title}:
     * [Preview]({preview})
     * [Diff]({diff})
 `;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function main(e) {
     try {
         // Get the data from the HTML
@@ -55,8 +56,8 @@ async function main(e) {
         const markdown_box = document.getElementById('markdown');
         markdown_box.value = markdown_start + final;
     }
-    catch (e) {
-        alert(`preview error: ${e}`);
+    catch (err) {
+        alert(`preview error: ${err}`);
     }
 }
 window.addEventListener('load', () => {
@@ -68,34 +69,33 @@ window.addEventListener('load', () => {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parts = exports.repo_name = void 0;
-;
 exports.repo_name = `epub-specs`;
 exports.parts = [
     {
         path: 'epub33/overview/index.html',
         title: 'EPUB 3 Overview',
-        short_name: 'overview'
+        short_name: 'overview',
     },
     {
         path: 'epub33/core/index.html',
         title: 'EPUB 3.3',
-        short_name: 'core'
+        short_name: 'core',
     },
     {
         path: 'epub33/rs/index.html',
         title: 'EPUB 3.3 Reading Systems',
-        short_name: 'rs'
+        short_name: 'rs',
     },
     {
         path: 'epub33/multi-rend/index.html',
         title: 'EPUB Multiple-Rendition Publications 1.1',
-        short_name: 'multi-rend'
+        short_name: 'multi-rend',
     },
     {
-        path: 'epub33/a11/index.html',
+        path: 'epub33/a11y/index.html',
         title: 'EPUB Accessibility 1.1',
-        short_name: 'a11y'
-    }
+        short_name: 'a11y',
+    },
 ];
 
 },{}],3:[function(require,module,exports){
@@ -122,8 +122,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.get_data = exports.constants = void 0;
+/* eslint-disable @typescript-eslint/no-namespace */
 var constants;
 (function (constants) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
     const githack = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
     // export const new_version = statically;
@@ -176,11 +178,11 @@ function get_urls(main_repo, octocat, respec, path = 'index.html') {
     const head_repo = octocat.head.repo.full_name.split('/');
     const submission_repo = {
         owner: head_repo[0],
-        repo: head_repo[1]
+        repo: head_repo[1],
     };
     // Get the data for the submission branch
     const submission_branch = {
-        branch: octocat.head.ref
+        branch: octocat.head.ref,
     };
     // Get the new version's URL
     const new_version = constants.new_version
@@ -223,7 +225,7 @@ async function get_data(url, respec = true, paths = ['index.html']) {
     const parsed_path = new URL(url).pathname.split('/');
     const home_repo = {
         owner: parsed_path[1],
-        repo: parsed_path[2]
+        repo: parsed_path[2],
     };
     const pr_number = parsed_path[4];
     const gh_api_url = constants.gh_api

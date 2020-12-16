@@ -21,6 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const preview_links = __importStar(require("./lib/preview_links"));
 const spec = __importStar(require("./lib/epub_data"));
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { program } = require('commander');
 const markdown_start = `
 See:

@@ -1,14 +1,15 @@
 import * as preview_links from './lib/preview_links';
 import * as spec          from './lib/epub_data';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { program } = require('commander');
 
-const markdown_start :string= `
+const markdown_start = `
 See:
 
 `;
 
-const markdown :string = `* For {title}:
+const markdown = `* For {title}:
     * [Preview]({preview})
     * [Diff]({diff})
 `;
@@ -32,7 +33,7 @@ async function main() {
                 return accumulator + markdown.replace('{title}', spec.parts[currentIndex].title).replace('{preview}', currentValue.new).replace('{diff}', currentValue.diff);
             }, '');
             console.log(markdown_start + final);
-        } catch(e) {
+        } catch (e) {
             console.log(`preview error: ${e}`);
             process.exit(-1);
         }

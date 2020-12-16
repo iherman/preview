@@ -1,80 +1,118 @@
 module.exports = {
-    parser: '@typescript-eslint/parser',
-    parserOptions: {
-        ecmaVersion: 2018,
-        sourceType: 'module',
+    parser        : '@typescript-eslint/parser',
+    parserOptions : {
+        ecmaVersion : 2018,
+        sourceType  : 'module',
     },
-    plugins: ['@typescript-eslint'],
-    env: {
-        browser: true,
-        node: true,
+    plugins : ['@typescript-eslint'],
+    env     : {
+        browser : true,
+        node    : true,
     },
-    extends: [
+    extends : [
         'eslint:recommended',
-        'plugin:@typescript-eslint/recommended',
-        'airbnb-base'
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
     ],
-    rules: {
-        "indent": [
-            "error",
-            4,
-            {
-                "SwitchCase": 1,
-                "CallExpression": {
-                    "arguments": "first"
-                }
-            }
-        ],
-        "no-multi-spaces": [
+    "rules" : {
+        "no-console"                         : 0, // set it to 0 if it is o.k. to have console.log
+        "@typescript-eslint/no-explicit-any" : 0,
+        "no-constant-condition"              : [
             "error",
             {
-                "exceptions": {
-                    "VariableDeclarator": true
-                }
-            }
+                "checkLoops" : false
+            },
         ],
-        "camelcase": false,
-        "strict": false,
-        "no-else-return": false,
-        "max-len": [
+        "indent" : [
+            "error", 4,
+        ],
+        "no-var-requires" : 0,
+        "no-multi-spaces" : [
             "error",
             {
-                "code": 150
-            }
+                "exceptions" : {
+                    "VariableDeclarator" : true,
+                    "ImportDeclaration"  : true,
+                },
+            },
         ],
-        "key-spacing": [
+        "no-else-return" : 0,
+        "max-len"        : [
             "error",
             {
-                "align": {
-                    "beforeColon": true,
-                    "afterColon": true,
-                    "true": "colon"
-                }
-            }
+                "code"                   : 150,
+                "ignoreComments"         : true,
+                "ignoreUrls"             : true,
+                "ignoreStrings"          : true,
+                "ignoreTemplateLiterals" : true,
+                "ignoreRegExpLiterals"   : true,
+            },
         ],
-        "comma-dangle": [
-            "error",
-            "never"
-        ],
-        "arrow-parens": [
-            "error",
-            "always"
-        ],
-        "no-plusplus": [
+        "key-spacing" : [
             "error",
             {
-                "allowForLoopAfterthoughts": true
+                "align" : {
+                    "beforeColon" : true,
+                    "afterColon"  : true,
+                    "on"          : "colon",
+                },
+                "multiLine" : {
+                    "beforeColon" : true,
+                    "afterColon"  : true,
+                },
+            },
+        ],
+        "comma-dangle" : [
+            "error",
+            "always-multiline",
+            {
+                "functions" : "never",
             }
         ],
-        "no-param-reassign": [
+        "arrow-parens" : [
+            "error",
+            "always",
+        ],
+        "no-plusplus" : [
             "error",
             {
-                "props": false
+                "allowForLoopAfterthoughts" : true,
+            },
+        ],
+        "no-param-reassign" : [
+            "error",
+            {
+                "props" : false,
+            },
+        ],
+        "prefer-destructuring"  : 0,
+        "consistent-return"     : 2,
+        "no-eval"               : 2,
+        "no-implied-eval"       : 2,
+        "array-callback-return" : 2,
+        "eqeqeq"                : [
+            "error",
+            "smart",
+        ],
+        "no-label-var"       : 2,
+        "no-shadow"          : 2,
+        "func-name-matching" : 2,
+
+        "keyword-spacing" : [
+            "error",
+            {
+                "before" : true,
+                "after"  : true,
             }
         ],
-        "prefer-destructuring": false,
-        "consistent-return": false,
-        "no-eval": "error",
-        "no-implied-eval": "error"
-    }
+
+        "max-lines-per-function" : [
+            1,
+            {
+                "max"            : 80,
+                "skipBlankLines" : true,
+                "skipComments"   : true,
+            },
+        ],
+    },
 };
