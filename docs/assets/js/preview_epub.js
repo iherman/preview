@@ -94,9 +94,24 @@ exports.parts = [
         short_name: 'multi-rend',
     },
     {
+        path: 'epub33/tts/index.html',
+        title: 'EPUB 3 Text-to-Speech Enhancements',
+        short_name: 'tts',
+    },
+    {
         path: 'epub33/a11y/index.html',
         title: 'EPUB Accessibility 1.1',
         short_name: 'a11y',
+    },
+    {
+        path: 'epub33/a11y-tech/index.html',
+        title: 'EPUB Accessibility Techniques',
+        short_name: 'a11y-tech',
+    },
+    {
+        path: 'epub33/epub-a11y-eaa-mapping/index.html',
+        title: 'EPUB Accessibility - EU Accessibility Act Mapping',
+        short_name: 'epub-a11y-eaa-mapping',
     },
 ];
 
