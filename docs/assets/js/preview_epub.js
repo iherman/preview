@@ -113,6 +113,21 @@ exports.parts = [
         title: 'EPUB Accessibility - EU Accessibility Act Mapping',
         short_name: 'epub-a11y-eaa-mapping',
     },
+    {
+        path: 'epub33/a11y-exemption/index.html',
+        title: 'The EPUB Accessibility exemption property',
+        short_name: 'a11y-exemption',
+    },
+    {
+        path: 'epub33/fxl-a11y/index.html',
+        title: 'EPUB Fixed Layout Accessibility',
+        short_name: 'fxl-a11y',
+    },
+    {
+        path: 'epub33/fxl-a11y-tech/index.html',
+        title: 'EPUB Fixed Layout Accessibility Techniques',
+        short_name: 'fxl-a11y-tech',
+    },
 ];
 
 },{}],3:[function(require,module,exports){
