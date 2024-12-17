@@ -1,5 +1,5 @@
-import * as preview_links from './lib/preview_links';
-import * as spec          from './lib/epub_data';
+import * as preview_links from './lib/preview_links.ts';
+import * as spec          from './lib/epub_data.ts';
 
 const markdown_start = `
 See:
@@ -12,8 +12,7 @@ const markdown = `* For {title}:
 `;
 
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function main(e: Event) {
+async function main(_e: Event) {
     try {
         // Get the data from the HTML
         const number   = document.getElementById('number') as HTMLInputElement;
@@ -27,11 +26,7 @@ async function main(e: Event) {
         // if yes, then the corresponding path should be used
         const parts: spec.Part[] = spec.parts.filter((part: spec.Part): boolean => {
             const choice = document.getElementById(part.short_name) as HTMLInputElement;
-            if (choice === null || choice.checked === false) {
-                return false;
-            } else {
-                return true;
-            }
+            return !(choice === null || choice.checked === false);
         });
 
         const URLs :preview_links.URLs[] = await preview_links.get_data(url, service.value, true, parts.map((part) => part.path));
@@ -48,7 +43,9 @@ async function main(e: Event) {
     }
 }
 
-window.addEventListener('load', () => {
+globalThis.addEventListener('load', () => {
     const go_button = document.getElementById('go');
-    go_button.addEventListener('click', main);
+    if (go_button) {
+        go_button.addEventListener('click', main);
+    }
 });

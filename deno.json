@@ -1,0 +1,25 @@
+{
+  "version": "0.6.0",
+  "description": "Generation of preview URL-s for a PR",
+  "date": "2024-12-17",
+  "license": "W3C-20150513",
+  "author": "Ivan Herman <ivan@w3.org>",
+  "compilerOptions": {
+    "lib": ["deno.ns", "dom"]
+  },
+  "tasks": {
+    "epub": {
+      "description": "Generate the modules for the EPUB HTML page.",
+      "command": "deno run -A tools/epub_build.ts"
+    },
+    "generic": {
+      "description": "Generate the modules for the general HTML page.",
+      "command": "deno run -A tools/generic_build.ts"
+    },
+    "package": {
+      "description": "Generate an npm compatible package into the '.npm' directory.",
+      "command": "deno run -A tools/build_npm.ts"
+    },
+    "test_epub": "deno run -A src/epub.ts 2671"
+  }
+}

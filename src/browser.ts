@@ -1,7 +1,6 @@
-import * as preview_links from './lib/preview_links';
+import * as preview_links from './lib/preview_links.ts';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function main(e: Event) {
+async function main(_e: Event) {
     try {
         // Get the data from the HTML
         const url      = document.getElementById('url') as HTMLInputElement;
@@ -24,7 +23,9 @@ async function main(e: Event) {
     }
 }
 
-window.addEventListener('load', () => {
+globalThis.addEventListener('load', () => {
     const go_button = document.getElementById('go');
-    go_button.addEventListener('click', main);
+    if (go_button) {
+        go_button.addEventListener('click', main)
+    }
 });

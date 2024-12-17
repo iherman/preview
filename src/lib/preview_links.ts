@@ -1,42 +1,23 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+// deno-lint-ignore-file no-namespace
 export namespace constants {
-    export const statically = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
-    export const githack    = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
+    export const statically: string = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
+    export const githack: string = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
 
-    export const GITHACK    = "githack";
-    export const STATICALLY = "statically";
+    export const GITHACK: string = "githack";
+    export const STATICALLY: string = "statically";
 
-    export const old_version = 'https://{owner}.github.io/{repo}/{file}';
-    export const gh_api      = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
-    export const html_diff   = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
-    export const spec_gen    = 'https://labs.w3.org/spec-generator/?type=respec&url={url}'
+    export const old_version: string = 'https://{owner}.github.io/{repo}/{file}';
+    export const gh_api: string = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
+    export const html_diff: string = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
+    export const spec_gen: string = 'https://labs.w3.org/spec-generator/?type=respec&url={url}'
 
-    export const markdown = `
+    export const markdown: string = `
 See:
 
 * [Preview]({preview})
 * [Diff]({diff})
 `
-
-    /**
-     * Flag to decide whether the code runs in a browser or in node.js
-     */
-    export const is_browser :boolean = (process === undefined || process.title === 'browser');
 }
-
-/* ======================================= Interface to Fetch ========================= */
-import * as node_fetch from 'node-fetch';
-/**
- * The effective fetch implementation run by the rest of the code.
- *
- * There is no default fetch implementation for `node.js`, hence the necessity to import 'node-fetch'. However, if the code
- * runs in a browser, there is an error message whereby only the fetch implementation in the Window is acceptable.
- *
- * This variable is a simple, polyfill like switch between the two, relying on the existence (or not) of the
- * `process` variable (built-in for `node.js`).
- *
- */
-const my_fetch: ((arg :string) => Promise<any>) = constants.is_browser ? fetch : node_fetch.default;
 
 /* ======================================= Core operations ========================= */
 
@@ -54,22 +35,32 @@ export interface URLs {
     diff :string;
 }
 
+// to make typescript happy
+interface Octo {
+    head : {
+        repo: {
+            full_name : string
+        },
+        ref : string,
+    }
+}
+
 /**
  * Generate all the URLs based on the JSON data of the PR. That JSON data is the one
- * returned by the Github API
+ * returned by the GitHub API
  *
  * @param main_repo - identification of the main repo, ie, the target of the PR
- * @param octocat - the data returned by the Github API for the PR
+ * @param octocat - the data returned by the GitHub API for the PR
  * @param service - name of the caching service
  * @param respec - whether the sources are to be encapsulated into a spec generator call for respec in the html diff
  * @param path - the path of the file to be converted
  */
-function get_urls(main_repo :Repo, octocat :any, service: string, respec :boolean, path = 'index.html') :URLs {
+function get_urls(main_repo: Repo, octocat: Octo, service: string, respec: boolean, path: string = 'index.html') :URLs {
     /**
     * The URL used in the spec generator must be percent encoded
     */
     const encodeurl = (url :string) :string => {
-        return url.replace(/\?/g,'%3F').replace(/\&/g,'%26')
+        return url.replace(/\?/g,'%3F').replace(/&/g,'%26')
     }
 
     // Get the data for the repository of the submission
@@ -115,7 +106,8 @@ function get_urls(main_repo :Repo, octocat :any, service: string, respec :boolea
  * @async
  * @param url - URL of the PR
  * @param service - name of the caching service
- * @param respec - Flag whether the documents are in ReSpec, ie, should be converted before establish the diffs
+ * @param respec - Flag whether the documents are in ReSpec, i.e., should be converted before establish the diffs
+ * @param paths - Path to the file to be converted
  */
 export async function get_data(url :string, service: string, respec = true, paths :string[] = ['index.html']) :Promise<URLs[]> {
     /**
@@ -123,8 +115,8 @@ export async function get_data(url :string, service: string, respec = true, path
      * The standard idiom to get JSON data via fetch
      * @async
      */
-    const fetch_json = async (resource_url :string) :Promise<any> => {
-        const response = await my_fetch(resource_url);
+    const fetch_json = async (resource_url :string) :Promise<Octo> => {
+        const response = await fetch(resource_url);
         return await response.json();
     }
 
@@ -140,7 +132,7 @@ export async function get_data(url :string, service: string, respec = true, path
         .replace('{owner}', home_repo.owner)
         .replace('{repo}', home_repo.repo)
         .replace('{number}', pr_number);
-    const octocat :any = await fetch_json(gh_api_url);
+    const octocat: Octo = await fetch_json(gh_api_url);
 
     return paths.map((path) => get_urls(home_repo, octocat, service, respec, path));
 }
