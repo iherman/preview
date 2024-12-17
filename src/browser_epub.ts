@@ -1,5 +1,5 @@
 import * as preview_links from './lib/preview_links.ts';
-import * as spec          from './lib/epub_data.ts';
+import * as specs         from './lib/epub_data.ts';
 
 const markdown_start = `
 See:
@@ -16,7 +16,7 @@ async function main(_e: Event) {
     try {
         // Get the data from the HTML
         const number   = document.getElementById('number') as HTMLInputElement;
-        const url      = `https://github.com/w3c/${spec.repo_name}/pull/${number.value}`;
+        const url      = `https://github.com/${specs.repo_owner}/${specs.repo_name}/pull/${number.value}`;
 
         // Get the service name
         const service  = document.getElementById('service') as HTMLSelectElement;
@@ -24,7 +24,7 @@ async function main(_e: Event) {
         // These are the possible specs
         // find the corresponding checkbox and see if it has been checked.
         // if yes, then the corresponding path should be used
-        const parts: spec.Part[] = spec.parts.filter((part: spec.Part): boolean => {
+        const parts: specs.Part[] = specs.parts.filter((part: specs.Part): boolean => {
             const choice = document.getElementById(part.short_name) as HTMLInputElement;
             return !(choice === null || choice.checked === false);
         });
