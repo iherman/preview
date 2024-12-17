@@ -20,10 +20,10 @@ The tool is written in Typescript and in runs with [`deno`](https://deno.land).
 Once the repository is cloned/downloaded, running, you can run
 
 ```sh
-ndeno run src/main.ts --help --help
+deno run src/main.ts --help
 ```
 
-to get a simple information on how to run the service.
+to get simple information on how to run the service.
 
 ### Web module installation
 
@@ -32,6 +32,41 @@ To generate a new version of the javascript modules, imported by the HTML interf
 ```sh
 deno task generic
 ```
+
+which installs the `docs/assets/js/preview.js`. That is used by the HTML interface in `docs/index.html` or,
+on the Web, in https://iherman.github.io/preview/. 
+
+## EPUB case — multi-document repositories
+
+The generic case is prepared to the situation where the "main" file to be
+previewed is called `index.html` on the top level. In other words, it reflects the "one repository —one document" 
+model. However, there are cases where _one_ repository is used for many documents in parallel; this is the case,
+for example, of the [EPUB 3 Recommendation repository](https://github.com/w3c/epub-specs/), which is used for the parallel
+development of numerous documents. The difference is that the exact path for each document must be re-used to 
+generate the final URLs. 
+
+(Note that this is the case where the GitHub "PR preview" application also fails. In other words, for the development of
+EPUB, this tool _is the only_ tool that can be used to put preview statements in the PR comments.)
+
+The library is prepared for the EPUB case, and similar setups can be done for other, similar cases. The CLI for EPUB 
+be run as 
+
+```sh
+deno run src/epub.ts --help
+```
+
+The Web module can be installed by
+
+```sh
+deno task epub
+```
+
+which installs the `docs/assets/js/preview_epub.js`. That is used by the HTML interface in `docs/epub.html` or,
+on the Web, in https://iherman.github.io/preview/epub.html.
+
+Note that the file `./src/lib/epub_data.ts` contains all the necessary information about the documents to be watched; 
+this file must be modified if new EPUB document are added, and can be used as a pattern for other, similar setup for other 
+group of documents.
 
 ## Notes
 
