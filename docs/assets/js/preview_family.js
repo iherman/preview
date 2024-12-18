@@ -55,6 +55,7 @@ async function get_data(url, service, respec = true, paths = ["index.html"]) {
 }
 
 // src/lib/epub_data.ts
+var family = "EPUB 3";
 var repo_name = "epub-specs";
 var repo_owner = "w3c";
 var parts = [
@@ -124,7 +125,26 @@ var markdown = `* For {title}:
     * [Preview]({preview})
     * [Diff]({diff})
 `;
-async function main(_e) {
+function finalizePage() {
+  const crateChoice = (part) => {
+    const pattern = '<input type="checkbox" name="{short_name}" id="{short_name}"><label for="{short_name}">{title};\xA0</label>';
+    return pattern.replaceAll("{short_name}", part.short_name).replaceAll("{title}", part.title);
+  };
+  const headTitle = document.getElementsByTagName("title").item(0);
+  if (headTitle && headTitle.textContent) {
+    headTitle.textContent = headTitle.textContent.replace("{title}", family);
+  }
+  const mainTitle = document.querySelector("header h1");
+  if (mainTitle && mainTitle.textContent) {
+    mainTitle.textContent = mainTitle.textContent.replaceAll("{title}", family);
+  }
+  const choices = ["Specifications:<br/>", ...parts.map(crateChoice)].join("\n");
+  const spec_choices = document.getElementById("spec_choices");
+  if (spec_choices) {
+    spec_choices.innerHTML = choices;
+  }
+}
+async function go(_e) {
   try {
     const number = document.getElementById("number");
     const url = `https://github.com/${repo_owner}/${repo_name}/pull/${number.value}`;
@@ -144,8 +164,9 @@ async function main(_e) {
   }
 }
 globalThis.addEventListener("load", () => {
+  finalizePage();
   const go_button = document.getElementById("go");
   if (go_button) {
-    go_button.addEventListener("click", main);
+    go_button.addEventListener("click", go);
   }
 });

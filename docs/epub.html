@@ -2,7 +2,7 @@
 <html lang="en-US">
     <head>
         <meta charset='utf-8'>
-        <title>epub pr preview</title>
+        <title>{title} pr preview</title>
         <link rel='stylesheet' href='./assets/css/preview.css'/>
         <script type='text/javascript' src='./assets/js/preview_family.js'></script>
         <style>
@@ -27,7 +27,7 @@
     </head>
     <body>
         <header>
-            <h1>epub pr preview — preview statements for EPUB 3.X PR-s</h1>
+            <h1>preview statements for {title} PR-s</h1>
         </header>
         <main>
             <p>This form generates markdown snippet that can be added to the PR comment manually to provide a preview of the new version as well as a diff file. It is poor man’s alternative to the more elaborate PR-preview GitHub App, which cannot be used for several documents at a time:</p>
@@ -37,21 +37,7 @@
                     <label for="number">PR number: </label> <input name="number" id="number" size="16" min="0" max="10000" type="number" step="1">
                 </div>
 
-                <div>
-                    Specification(s):<br/>
-                    <input type="checkbox" name="overview"              id="overview"><label for="overview">Overview; </label>
-                    <input type="checkbox" name="core"                  id="core"><label for="core">Core spec; </label>
-                    <input type="checkbox" name="rs"                    id="rs"><label for="rs">Reading Systems; </label>
-                    <input type="checkbox" name="multi-rend"            id="multi-rend"><label for="multi-rend">Multiple Rendition; </label>
-                    <input type="checkbox" name="tts"                   id="tts"><label for="tts">Text-to-Speech; </label>
-                    <br/>
-                    <input type="checkbox" name="a11y"                  id="a11y"><label for="a11y">EPUB A11y; </label>
-                    <input type="checkbox" name="a11y-tech"             id="a11y-tech"><label for="a11y-tech">EPUB A11y Techniques; </label>
-                    <input type="checkbox" name="epub-a11y-eaa-mapping" id="epub-a11y-eaa-mapping"><label for="epub-a11y-eaa-mapping">A11y-EU Mapping; </label>
-                    <input type="checkbox" name="a11y-exemption"        id="a11y-exemption"><label for="a11y-exemption">A11y Exemption; </label>
-                    <br/>
-                    <input type="checkbox" name="fxl-a11y"              id="fxl-a11y"><label for="fxl-a11y">FXL A11y; </label>
-                    <input type="checkbox" name="fxl-a11y-tech"         id="fxl-a11y-tech"><label for="fxl-a11y-tech">FXL A11y Techniques; </label>
+                <div id="spec_choices">
                 </div>
 
                 <div id="service_form">

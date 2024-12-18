@@ -11,8 +11,44 @@ const markdown = `* For {title}:
     * [Diff]({diff})
 `;
 
+function finalizePage() {
+    const crateChoice = (part :specs.Part): string => {
+        const pattern: string = '<input type="checkbox" name="{short_name}" id="{short_name}"><label for="{short_name}">{title}; </label>';
+        return pattern
+                .replaceAll('{short_name}', part.short_name)
+                .replaceAll('{title}', part.title);
+    };
 
-async function main(_e: Event) {
+
+    /* Modify the title elements, using the "family" entry of the imported data */
+    const headTitle = document.getElementsByTagName('title').item(0);
+    if (headTitle && headTitle.textContent) {
+        headTitle.textContent = headTitle.textContent.replace('{title}', specs.family);
+    }
+    const mainTitle = document.querySelector('header h1');
+    if (mainTitle && mainTitle.textContent) {
+        mainTitle.textContent = mainTitle.textContent.replaceAll('{title}', specs.family);
+    }
+
+    const choices = ["Specifications:<br/>", ...specs.parts.map(crateChoice)].join('\n');
+
+    const spec_choices = document.getElementById('spec_choices');
+    if (spec_choices) {
+        spec_choices.innerHTML = choices;
+    }
+
+
+    // alert(choices);
+
+
+
+
+
+}
+
+
+
+async function go(_e: Event) {
     try {
         // Get the data from the HTML
         const number   = document.getElementById('number') as HTMLInputElement;
@@ -44,8 +80,9 @@ async function main(_e: Event) {
 }
 
 globalThis.addEventListener('load', () => {
+    finalizePage();
     const go_button = document.getElementById('go');
     if (go_button) {
-        go_button.addEventListener('click', main);
+        go_button.addEventListener('click', go);
     }
 });
