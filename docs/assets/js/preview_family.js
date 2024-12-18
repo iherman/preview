@@ -127,7 +127,7 @@ var markdown = `* For {title}:
 `;
 function finalizePage() {
   const crateChoice = (part) => {
-    const pattern = '<input type="checkbox" name="{short_name}" id="{short_name}"><label for="{short_name}">{title};\xA0</label>';
+    const pattern = '<input type="checkbox" name="{short_name}" id="{short_name}"><label for="{short_name}">{title}</label><br>\xA0\xA0';
     return pattern.replaceAll("{short_name}", part.short_name).replaceAll("{title}", part.title);
   };
   const headTitle = document.getElementsByTagName("title").item(0);
@@ -138,7 +138,7 @@ function finalizePage() {
   if (mainTitle && mainTitle.textContent) {
     mainTitle.textContent = mainTitle.textContent.replaceAll("{title}", family);
   }
-  const choices = ["Specifications:<br/>", ...parts.map(crateChoice)].join("\n");
+  const choices = ["Specifications:<br/>\xA0\xA0", ...parts.map(crateChoice)].join("\n").slice(0, -6);
   const spec_choices = document.getElementById("spec_choices");
   if (spec_choices) {
     spec_choices.innerHTML = choices;
@@ -147,7 +147,13 @@ function finalizePage() {
 async function go(_e) {
   try {
     const number = document.getElementById("number");
-    const url = `https://github.com/${repo_owner}/${repo_name}/pull/${number.value}`;
+    const url = ((value) => {
+      if (value) {
+        return `https://github.com/${repo_owner}/${repo_name}/pull/${value}`;
+      } else {
+        throw "No PR number has been provided.";
+      }
+    })(number.value);
     const service = document.getElementById("service");
     const parts2 = parts.filter((part) => {
       const choice = document.getElementById(part.short_name);

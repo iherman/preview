@@ -10,12 +10,12 @@
                 display: grid;
                 grid-template-columns: 10em auto;
                 grid-gap: 1em;
-                align-items: center;
+                align-items: start ;
             }
             button#go {
                 grid-column: span 2
             }
-            div#specs {
+            div#spec_choices {
                 grid-column: span 2;
             }
 
@@ -27,7 +27,7 @@
     </head>
     <body>
         <header>
-            <h1>preview statements for {title} PR-s</h1>
+            <h1>Preview statements for {title} PR-s</h1>
         </header>
         <main>
             <p>This form generates markdown snippet that can be added to the PR comment manually to provide a preview of the new version as well as a diff file. It is poor man’s alternative to the more elaborate PR-preview GitHub App, which cannot be used for several documents at a time:</p>
