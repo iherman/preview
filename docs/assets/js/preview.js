@@ -70,6 +70,7 @@ async function main(_e) {
 }
 globalThis.addEventListener("load", () => {
   const go_button = document.getElementById("go");
-  go_button.addEventListener("click", main);
+  if (go_button) {
+    go_button.addEventListener("click", main);
+  }
 });
-//# sourceMappingURL=preview.js.map

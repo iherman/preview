@@ -9,7 +9,7 @@ await esbuild.build({
     platform: "browser", // Target platform
     target: "esnext", // JavaScript version target
     minify: false, // Minify the output
-    sourcemap: true, // Generate source maps
+    sourcemap: false, // Generate source maps
     plugins: [...denoPlugins()], // Use Deno plugins for module resolution
 });
 

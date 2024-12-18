@@ -52,7 +52,7 @@ The library is prepared for the EPUB case, and similar setups can be done for ot
 be run as 
 
 ```sh
-deno run src/epub.ts --help
+deno run src/family.ts --help
 ```
 
 The Web module can be installed by

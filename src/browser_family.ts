@@ -1,5 +1,5 @@
 import * as preview_links from './lib/preview_links.ts';
-import * as specs         from './lib/epub_data.ts';
+import * as specs         from './lib/multiple_data.ts';
 
 const markdown_start = `
 See:

@@ -1,9 +1,6 @@
-export interface Part {
-    path :string;
-    title :string;
-    short_name :string;
-}
+import { Part } from "./multiple_type.ts";
 
+export const family: string = 'EPUB 3';
 export const repo_name: string  = 'epub-specs';
 export const repo_owner: string = 'w3c';
 

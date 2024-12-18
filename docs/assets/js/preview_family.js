@@ -55,7 +55,8 @@ async function get_data(url, service, respec = true, paths = ["index.html"]) {
 }
 
 // src/lib/epub_data.ts
-var repo_name = `epub-specs`;
+var repo_name = "epub-specs";
+var repo_owner = "w3c";
 var parts = [
   {
     path: "epub33/overview/index.html",
@@ -114,7 +115,7 @@ var parts = [
   }
 ];
 
-// src/browser_epub.ts
+// src/browser_family.ts
 var markdown_start = `
 See:
 
@@ -126,15 +127,11 @@ var markdown = `* For {title}:
 async function main(_e) {
   try {
     const number = document.getElementById("number");
-    const url = `https://github.com/w3c/${repo_name}/pull/${number.value}`;
+    const url = `https://github.com/${repo_owner}/${repo_name}/pull/${number.value}`;
     const service = document.getElementById("service");
     const parts2 = parts.filter((part) => {
       const choice = document.getElementById(part.short_name);
-      if (choice === null || choice.checked === false) {
-        return false;
-      } else {
-        return true;
-      }
+      return !(choice === null || choice.checked === false);
     });
     const URLs = await get_data(url, service.value, true, parts2.map((part) => part.path));
     const final = URLs.reduce((accumulator, currentValue, currentIndex) => {
@@ -148,6 +145,7 @@ async function main(_e) {
 }
 globalThis.addEventListener("load", () => {
   const go_button = document.getElementById("go");
-  go_button.addEventListener("click", main);
+  if (go_button) {
+    go_button.addEventListener("click", main);
+  }
 });
-//# sourceMappingURL=preview_epub.js.map

@@ -5,7 +5,7 @@ const deno_json = JSON.parse(Deno.readTextFileSync("deno.json"));
 await emptyDir("./.npm");
 
 await build({
-    entryPoints: ["./src/main.ts", "./src/epub.ts"],
+    entryPoints: ["./src/main.ts", "./src/family.ts"],
     outDir: "./.npm",
     shims: {
         // see JS docs for overview and more options

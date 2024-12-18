@@ -18,6 +18,7 @@ async function main(): Promise<void> {
         console.error('preview error: no PR URL has been provided; exiting')
         Deno.exit(-1)
     } else {
+        // noinspection DuplicatedCode
         const url = program.args[0];
         let service = options.service || 'statically';
 
@@ -37,4 +38,5 @@ async function main(): Promise<void> {
     }
 }
 
+// noinspection JSIgnoredPromiseFromCall
 main();
