@@ -36,7 +36,7 @@ deno task generic
 which installs the `docs/assets/js/preview.js`. That is used by the HTML interface in `docs/index.html` or,
 on the Web, in https://iherman.github.io/preview/. 
 
-## EPUB case — multi-document repositories
+## Multi-document repositories, a.k.a. "family" of recommendation
 
 The generic case is prepared to the situation where the "main" file to be
 previewed is called `index.html` on the top level. In other words, it reflects the "one repository —one document" 
@@ -46,9 +46,9 @@ development of numerous documents. The difference is that the exact path for eac
 generate the final URLs. 
 
 (Note that this is the case where the GitHub "PR preview" application also fails. In other words, for the development of
-EPUB, this tool _is the only_ tool that can be used to put preview statements in the PR comments.)
+EPUB, this tool _is the only_ one that can be used to put preview statements in the PR comments.)
 
-The library is prepared for the EPUB case, and similar setups can be done for other, similar cases. The CLI for EPUB 
+The library is prepared for the "family" case, the current dataset is centered around EPUB. The CLI is: 
 be run as 
 
 ```sh
@@ -58,15 +58,19 @@ deno run src/family.ts --help
 The Web module can be installed by
 
 ```sh
-deno task epub
+deno task family
 ```
 
-which installs the `docs/assets/js/preview_epub.js`. That is used by the HTML interface in `docs/epub.html` or,
-on the Web, in https://iherman.github.io/preview/epub.html.
+which installs the `docs/assets/js/preview_family.js`. That is used by the HTML interface in `docs/epub.html`
+in the current setup (the name can be adapted), on the Web, in https://iherman.github.io/preview/epub.html.
 
-Note that the file `./src/lib/epub_data.ts` contains all the necessary information about the documents to be watched; 
-this file must be modified if new EPUB document are added, and can be used as a pattern for other, similar setup for other 
-group of documents.
+### Change families
+
+To install a different family of recommendations:
+
+- Clone the `./src/lib/epub_data.ts` file and modify it to match the new family of specification
+- Modify the `./src/lib/multiple_data.ts` file by importing the newly created file
+- Optionally, rename the `./docs/epub.html` file to something more appropriate for the family
 
 ## Notes
 

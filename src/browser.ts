@@ -1,6 +1,10 @@
 import * as preview_links from './lib/preview_links.ts';
 
-async function main(_e: Event) {
+/**
+ * Even handler for the action button on the form.
+ * @param _e
+ */
+async function go(_e: Event) {
     try {
         // Get the data from the HTML
         const url      = document.getElementById('url') as HTMLInputElement;
@@ -26,6 +30,6 @@ async function main(_e: Event) {
 globalThis.addEventListener('load', () => {
     const go_button = document.getElementById('go');
     if (go_button) {
-        go_button.addEventListener('click', main)
+        go_button.addEventListener('click', go)
     }
 });

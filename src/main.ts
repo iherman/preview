@@ -2,6 +2,12 @@ import * as preview_links from './lib/preview_links.ts';
 import { Command }        from 'npm:commander';
 
 
+/**
+ * Entry point to the generic CLI case. The command line arguments are used
+ * to generate a markdown snippet for the preview.
+ *
+ * The main command line argument is the full URL for the PR that is to be previewed.
+ */
 async function main(): Promise<void> {
     const program = new Command();
     program

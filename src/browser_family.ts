@@ -11,16 +11,22 @@ const markdown = `* For {title}:
     * [Diff]({diff})
 `;
 
+/**
+ * The form data, i.e., a choice button for each specification in the family, is generated
+ * dynamically, using the family data (indirectly imported via `./lib/multiple_data.ts`.
+ *
+ * This function is called once at load time.
+ */
 function finalizePage() {
-    const crateChoice = (part :specs.Part): string => {
+    // Generate a single chose for a specification
+    const createChoice = (part :specs.Part): string => {
         const pattern: string = '<input type="checkbox" name="{short_name}" id="{short_name}"><label for="{short_name}">{title}</label><br>  ';
         return pattern
                 .replaceAll('{short_name}', part.short_name)
                 .replaceAll('{title}', part.title);
     };
 
-
-    /* Modify the title elements, using the "family" entry of the imported data */
+    // Modify the title elements, using the "family" entry of the imported data
     const headTitle = document.getElementsByTagName('title').item(0);
     if (headTitle && headTitle.textContent) {
         headTitle.textContent = headTitle.textContent.replace('{title}', specs.family);
@@ -30,16 +36,24 @@ function finalizePage() {
         mainTitle.textContent = mainTitle.textContent.replaceAll('{title}', specs.family);
     }
 
-    const choices = ["Specifications:<br/>  ", ...specs.parts.map(crateChoice)].join('\n').slice(0,-6);
+    // Generate all the choices as a sequence of HTML strings
+    //
+    // The last entry in the construction removes the trailing `<br>&nbsp;&nbsp;` which is put there
+    // by the choice entry construction
+    const choices = ["Specifications:<br/>  ", ...specs.parts.map(createChoice)].join('\n').slice(0,-6);
 
+    // Insert the choice entries into the HTML source
     const spec_choices = document.getElementById('spec_choices');
     if (spec_choices) {
         spec_choices.innerHTML = choices;
     }
 }
 
-
-
+/**
+ * Event handler to generate the Markdown snippets.
+ *
+ * @param _e
+ */
 async function go(_e: Event) {
     try {
         // Get the data from the HTML
@@ -57,8 +71,8 @@ async function go(_e: Event) {
         const service  = document.getElementById('service') as HTMLSelectElement;
 
         // These are the possible specs
-        // find the corresponding checkbox and see if it has been checked.
-        // if yes, then the corresponding path should be used
+        // Filter using the corresponding checkbox and see if it has been checked.
+        // If yes, then the corresponding path should be used
         const parts: specs.Part[] = specs.parts.filter((part: specs.Part): boolean => {
             const choice = document.getElementById(part.short_name) as HTMLInputElement;
             return !(choice === null || choice.checked === false);

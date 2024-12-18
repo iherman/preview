@@ -47,7 +47,7 @@ interface Octo {
 
 /**
  * Generate all the URLs based on the JSON data of the PR. That JSON data is the one
- * returned by the GitHub API
+ * returned by the GitHub API.
  *
  * @param main_repo - identification of the main repo, ie, the target of the PR
  * @param octocat - the data returned by the GitHub API for the PR

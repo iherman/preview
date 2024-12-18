@@ -1,4 +1,5 @@
 {
+  "name": "@iherman/preview",
   "version": "0.6.0",
   "description": "Generation of preview URL-s for a PR",
   "date": "2024-12-18",

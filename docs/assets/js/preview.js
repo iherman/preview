@@ -55,7 +55,7 @@ async function get_data(url, service, respec = true, paths = ["index.html"]) {
 }
 
 // src/browser.ts
-async function main(_e) {
+async function go(_e) {
   try {
     const url = document.getElementById("url");
     const service = document.getElementById("service");
@@ -71,6 +71,6 @@ async function main(_e) {
 globalThis.addEventListener("load", () => {
   const go_button = document.getElementById("go");
   if (go_button) {
-    go_button.addEventListener("click", main);
+    go_button.addEventListener("click", go);
   }
 });

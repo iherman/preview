@@ -11,6 +11,14 @@ const markdown = `* For {title}:
     * [Diff]({diff})
 `;
 
+/**
+ * Entry point to the generic CLI case. The command line arguments are used
+ * to generate a set of markdown snippets for preview; one snippet for each
+ * specification as listed in the family.
+ *
+ * The main command line argument is the number of the PR. The repository data
+ * is (indirectly) imported from the corresponding module in `./lib`.
+ */
 async function main(): Promise<void> {
     const program = new Command();
     program

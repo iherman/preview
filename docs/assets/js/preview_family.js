@@ -126,7 +126,7 @@ var markdown = `* For {title}:
     * [Diff]({diff})
 `;
 function finalizePage() {
-  const crateChoice = (part) => {
+  const createChoice = (part) => {
     const pattern = '<input type="checkbox" name="{short_name}" id="{short_name}"><label for="{short_name}">{title}</label><br>\xA0\xA0';
     return pattern.replaceAll("{short_name}", part.short_name).replaceAll("{title}", part.title);
   };
@@ -138,7 +138,7 @@ function finalizePage() {
   if (mainTitle && mainTitle.textContent) {
     mainTitle.textContent = mainTitle.textContent.replaceAll("{title}", family);
   }
-  const choices = ["Specifications:<br/>\xA0\xA0", ...parts.map(crateChoice)].join("\n").slice(0, -6);
+  const choices = ["Specifications:<br/>\xA0\xA0", ...parts.map(createChoice)].join("\n").slice(0, -6);
   const spec_choices = document.getElementById("spec_choices");
   if (spec_choices) {
     spec_choices.innerHTML = choices;
