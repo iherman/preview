@@ -1,8 +1,8 @@
 {
   "name": "@iherman/preview",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Generation of preview URL-s for a PR",
-  "date": "2024-12-18",
+  "date": "2025-02-20",
   "license": "W3C-20150513",
   "author": "Ivan Herman <ivan@w3.org>",
   "compilerOptions": {
