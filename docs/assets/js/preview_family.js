@@ -75,18 +75,18 @@ var parts = [
     short_name: "rs"
   },
   {
-    path: "epub34/multi-rend/index.html",
-    title: "EPUB Multiple-Rendition Publications 1.1",
+    path: "wg-notes/multi-rend/index.html",
+    title: "EPUB Multiple-Rendition Publications",
     short_name: "multi-rend"
   },
   {
-    path: "epub34/tts/index.html",
+    path: "wg-notes/tts/index.html",
     title: "EPUB 3 Text-to-Speech Enhancements",
     short_name: "tts"
   },
   {
     path: "epub34/a11y/index.html",
-    title: "EPUB Accessibility 1.2",
+    title: "EPUB Accessibility 1.1.1",
     short_name: "a11y"
   },
   {
@@ -95,23 +95,28 @@ var parts = [
     short_name: "a11y-tech"
   },
   {
-    path: "epub34/epub-a11y-eaa-mapping/index.html",
+    path: "wg-notes/epub-a11y-eaa-mapping/index.html",
     title: "EPUB Accessibility - EU Accessibility Act Mapping",
     short_name: "epub-a11y-eaa-mapping"
   },
   {
-    path: "epub34/a11y-exemption/index.html",
+    path: "wg-notes/a11y-exemption/index.html",
     title: "The EPUB Accessibility exemption property",
     short_name: "a11y-exemption"
   },
   {
-    path: "epub34/fxl-a11y/index.html",
+    path: "wg-notes/fxl-a11y/index.html",
     title: "EPUB Fixed Layout Accessibility",
     short_name: "fxl-a11y"
   },
   {
-    path: "epub34/fxl-a11y-tech/index.html",
+    path: "wg-notes/fxl-a11y-tech/index.html",
     title: "EPUB Fixed Layout Accessibility Techniques",
+    short_name: "fxl-a11y-tech"
+  },
+  {
+    path: "wg-notes/ssv/index.html",
+    title: "EPUB 3 Structural Semantics Vocabulary",
     short_name: "fxl-a11y-tech"
   }
 ];

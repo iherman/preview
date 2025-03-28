@@ -48,8 +48,7 @@ generate the final URLs.
 (Note that this is the case where the GitHub "PR preview" application also fails. In other words, for the development of
 EPUB, this tool _is the only_ one that can be used to put preview statements in the PR comments.)
 
-The library is prepared for the "family" case, the current dataset is centered around EPUB. The CLI is: 
-be run as 
+The library is prepared for the "family" case, the current dataset is centered around EPUB. The CLI is:
 
 ```sh
 deno run src/family.ts --help

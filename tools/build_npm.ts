@@ -14,7 +14,7 @@ await build({
     importMap: "deno.json",
     package: {
         // package.json properties
-        name: deno_json.version,
+        name: deno_json.name,
         version: deno_json.version,
         date: deno_json.date,
         description: deno_json.description,
