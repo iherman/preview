@@ -21,6 +21,16 @@ export const parts: Part[] = [
         short_name : 'rs',
     },
     {
+        path       : "epub34/annotations/index.html",
+        title      : "EPUB 3 Annotations",
+        short_name : "epub-ann"
+    },
+    {
+        path       : "wg-notes/annotations-ucr/index.html",
+        title      : "EPUB Annotations Use Cases and Requirements",
+        short_name : "epub-ann-ucr"
+    },
+    {
         path       : 'wg-notes/multi-rend/index.html',
         title      : 'EPUB Multiple-Rendition Publications',
         short_name : 'multi-rend',
