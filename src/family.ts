@@ -12,7 +12,7 @@ const markdown = `* For {title}:
 `;
 
 /**
- * Entry point to the generic CLI case. The command line arguments are used
+ * Entry point to the family CLI case. The command line arguments are used
  * to generate a set of markdown snippets for preview; one snippet for each
  * specification as listed in the family.
  *
@@ -24,7 +24,7 @@ async function main(): Promise<void> {
     program
     .name('preview')
     .usage('[option] [pr_num]')
-    .description('Create a markdown snippet that can be inserted into as a PR comment for preview')
+    .description('Create a markdown snippet that can be inserted into as a PR comment for preview.  When using deno, run it with the -A option.')
     .option('-s, --service [service]', 'name of the service to use; value can be "githack" or "statically"')
     .parse(['', '', ...Deno.args]);
 

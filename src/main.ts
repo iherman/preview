@@ -6,15 +6,15 @@ import { Command }        from 'npm:commander';
  * Entry point to the generic CLI case. The command line arguments are used
  * to generate a markdown snippet for the preview.
  *
- * The main command line argument is the full URL for the PR that is to be previewed.
+ * The main command line argument is the full URL for the PR to be previewed.
  */
 async function main(): Promise<void> {
     const program = new Command();
     program
         .name('preview')
         .usage('[option] [pr_url]')
-        .description('Create a markdown snippet that can be inserted into as a PR comment for preview')
-        .option('-t, --text', 'whether the source is a plain vanilla HTML (as opposed to respec')
+        .description('Create a markdown snippet that can be inserted into as a PR comment for preview. When using deno, run it with the -A option.')
+        .option('-t, --text', 'whether the source is a plain vanilla HTML (as opposed to respec)')
         .option('-s, --service [service]', 'name of the service to use; value can be "githack" or "statically"')
         .parse(['', '', ...Deno.args]);
 

@@ -1,4 +1,4 @@
-import { Part } from "./multiple_type.ts";
+import type { Part } from "./multiple_type.ts";
 
 export const family: string = 'EPUB 3';
 export const repo_name: string  = 'epub-specs';
