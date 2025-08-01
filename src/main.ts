@@ -1,5 +1,5 @@
 import * as preview_links from './lib/preview_links.ts';
-import { Command }        from 'npm:commander';
+import { Command }        from 'npm:commander@12.1.0';
 
 
 /**
