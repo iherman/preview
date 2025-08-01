@@ -1,6 +1,6 @@
 import * as preview_links from './lib/preview_links.ts'
 import * as specs         from './lib/multiple_data.ts';
-import { Command }        from 'npm:commander';
+import { Command }        from 'npm:commander@12.1.0';
 const markdown_start = `
 See:
 
