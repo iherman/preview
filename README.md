@@ -73,8 +73,19 @@ To install a different family of recommendations:
 
 ## Notes
 
-Note that it is a poor man's solution compared to “PR Preview” App, and may still evolve the coming few days. 
-The biggest issue is that the diff is slow: it converts both the original and the new version via ReSpec on the fly 
-before creating a diff. A full service would do some sort of caching somewhere to make it more efficient.
+1. Note that it is a poor man's solution compared to “PR Preview” App, and may still evolve the coming few days. The biggest issue is that the diff is slow: it converts both the original and the new version via ReSpec on the fly before creating a diff. A full service would do some sort of caching somewhere to make it more efficient.
+2. If the only goal is to run the HTML interfaces locally (or on another server) instead running the versions on `github.io`, there is no need to clone the repository. The HTML files can be set up as follows:
+   
+    ```html
+    <html>
+        <head>
+            …
+            <link rel='stylesheet' href='https://iherman.github.io/preview/assets/css/preview.css'/>
+            <script type='text/javascript' src='https://iherman.github.io/preview/assets/js/preview.js'></script>
+
+        …
+    </html>
+    ```
+    (The javascript file has been minimized and is small. No reason the include a CDN.)
 
 

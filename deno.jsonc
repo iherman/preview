@@ -1,6 +1,6 @@
 {
   "name": "@iherman/preview",
-  "version"         : "0.6.2",
+  "version"         : "0.7.0",
   "description"     : "Generation of preview URL-s for a PR",
   "date"            : "2025-07-31",
   "license"         : "W3C-20150513",
