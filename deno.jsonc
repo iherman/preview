@@ -1,6 +1,6 @@
 {
   "name": "@iherman/preview",
-  "version"         : "0.7.0",
+  "version"         : "0.7.1",
   "description"     : "Generation of preview URL-s for a PR",
   "date"            : "2025-07-31",
   "license"         : "W3C-20150513",
@@ -18,11 +18,12 @@
   "tasks" : {
     "family"      : {
       "description" : "Generate the browser modules for the \"family\" HTML page.",
-      "command"     : "deno run -A tools/family_build.ts"
+      "command"     : "deno bundle -o docs/assets/js/preview_family.js --platform=browser --minify src/browser_family.ts"
     },
+
     "generic"      : {
       "description" : "Generate the browser modules for the general HTML page.",
-      "command"     : "deno run -A tools/generic_build.ts"
+      "command"     : "deno bundle -o docs/assets/js/preview.js --platform=browser --minify src/browser.ts"
     },
 
     // In general, this is the real meat for browser installation
@@ -37,10 +38,11 @@
     },
 
     // The complete build before pushing things up to repositories
-    "build"          : {
-      "dependencies" : ["family", "generic", "package"]
-
-    },
+    // Commented out... in reality, the npm version is not used, unnecessary to generate it.
+    // Left it in there for a historical memento :-)
+    // "build"          : {
+    //   "dependencies" : ["family", "generic", "package"]
+    // },
 
     "test_family" : "deno run -A src/family.ts 2671"
   }

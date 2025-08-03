@@ -11,23 +11,25 @@ verbatim into a GitHub comment. Note that the generic setup relies on the assump
 previewed is called `index.html` on the top level. The tool can be adapted to special setups, too, see the EPUB
 alternative below.
 
-## Generic case
-
-### CLI Installation
-
 The tool is written in Typescript and in runs with [`deno`](https://deno.land).
+
+## Local use with a cloned repository
+
+### Generic case
+
+#### CLI Installation
 
 Once the repository is cloned/downloaded, running, you can run
 
 ```sh
-deno run src/main.ts --help
+deno run src/main.ts [PR URL]
 ```
 
-to get simple information on how to run the service.
+to get simple information on how to run the service. Look at `--help` for other options.
 
-### Web module installation
+#### Web module installation
 
-To generate a new version of the javascript modules, imported by the HTML interface, run
+To generate a new version of the javascript version, to be imported by the HTML interface, run
 
 ```sh
 deno task generic
@@ -36,7 +38,7 @@ deno task generic
 which installs the `docs/assets/js/preview.js`. That is used by the HTML interface in `docs/index.html` or,
 on the Web, in https://iherman.github.io/preview/. 
 
-## Multi-document repositories, a.k.a. "family" of recommendation
+### Multi-document repositories, a.k.a. "family" of recommendation
 
 The generic case is prepared to the situation where the "main" file to be
 previewed is called `index.html` on the top level. In other words, it reflects the "one repository —one document" 
@@ -51,19 +53,19 @@ EPUB, this tool _is the only_ one that can be used to put preview statements in 
 The library is prepared for the "family" case, the current dataset is centered around EPUB. The CLI is:
 
 ```sh
-deno run src/family.ts --help
+deno run src/family.ts [PR number]
 ```
 
-The Web module can be installed by
+The javascript version, usable from a browser, can be installed by
 
 ```sh
 deno task family
 ```
 
-which installs the `docs/assets/js/preview_family.js`. That is used by the HTML interface in `docs/epub.html`
-in the current setup (the name can be adapted), on the Web, in https://iherman.github.io/preview/epub.html.
+which installs the `docs/assets/js/preview_family.js`. It is used by the HTML interface `docs/epub.html`
+in the current setup (the name can be adapted), or, on the Web, in https://iherman.github.io/preview/epub.html.
 
-### Change families
+#### Change families
 
 To install a different family of recommendations:
 
@@ -71,21 +73,38 @@ To install a different family of recommendations:
 - Modify the `./src/lib/multiple_data.ts` file by importing the newly created file
 - Optionally, rename the `./docs/epub.html` file to something more appropriate for the family
 
+## Doing everything remotely
+
+If the only goal is to _use_ the tool and not, possibly, modify it, there is no need to clone the repository. The CLI can be activated via `jsr` directly:
+
+```sh
+deno run jsr:@iherman/preview/cli [PR URL]
+```
+
+for the generic case, and
+
+```
+deno run jsr:@iherman/preview/family [PR number]
+```
+
+for the family case, respectively.
+
+As for the HTML on a local browser (or on another server), the HTML file can as follows
+
+
+```html
+<html>
+    <head>
+        …
+        <link rel='stylesheet' href='https://iherman.github.io/preview/assets/css/preview.css'/>
+        <script src='https://iherman.github.io/preview/assets/js/preview.js'></script>
+
+    …
+</html>
+```
+(The javascript file has been minimized and is small. No reason the bother with a CDN.)
+
+
 ## Notes
 
-1. Note that it is a poor man's solution compared to “PR Preview” App, and may still evolve the coming few days. The biggest issue is that the diff is slow: it converts both the original and the new version via ReSpec on the fly before creating a diff. A full service would do some sort of caching somewhere to make it more efficient.
-2. If the only goal is to run the HTML interfaces locally (or on another server) instead running the versions on `github.io`, there is no need to clone the repository. The HTML files can be set up as follows:
-   
-    ```html
-    <html>
-        <head>
-            …
-            <link rel='stylesheet' href='https://iherman.github.io/preview/assets/css/preview.css'/>
-            <script type='text/javascript' src='https://iherman.github.io/preview/assets/js/preview.js'></script>
-
-        …
-    </html>
-    ```
-    (The javascript file has been minimized and is small. No reason the include a CDN.)
-
-
+Note that it is a poor man's solution compared to “PR Preview” App, and may still evolve. The biggest issue is that the diff is slow: it converts both the original and the new version via ReSpec on the fly before creating a diff. A full service would do some sort of caching somewhere to make it more efficient.
