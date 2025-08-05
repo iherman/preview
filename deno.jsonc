@@ -1,8 +1,8 @@
 {
-  "name": "@iherman/preview",
-  "version"         : "0.7.1",
+  "name"            : "@iherman/preview",
+  "version"         : "1.0.0",
   "description"     : "Generation of preview URL-s for a PR",
-  "date"            : "2025-07-31",
+  "date"            : "2025-08-05",
   "license"         : "W3C-20150513",
   "author"          : "Ivan Herman <ivan@w3.org>",
   "compilerOptions" : {
@@ -22,8 +22,8 @@
     },
 
     "generic"      : {
-      "description" : "Generate the browser modules for the general HTML page.",
-      "command"     : "deno bundle -o docs/assets/js/preview.js --platform=browser --minify src/browser.ts"
+      "description": "Generate the browser modules for the general HTML page.",
+      "command": "deno bundle -o docs/assets/js/preview.js --platform=browser --minify src/browser.ts"
     },
 
     // In general, this is the real meat for browser installation
@@ -39,7 +39,7 @@
 
     // The complete build before pushing things up to repositories
     // Commented out... in reality, the npm version is not used, unnecessary to generate it.
-    // Left it in there for a historical memento :-)
+    // Left it in there as a historical memento :-)
     // "build"          : {
     //   "dependencies" : ["family", "generic", "package"]
     // },

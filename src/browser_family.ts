@@ -1,5 +1,5 @@
-import * as preview_links from './lib/preview_links.ts';
-import * as specs         from './lib/multiple_data.ts';
+import * as preview_links                     from './lib/preview_links.ts';
+import { findFamily, type Family, type Part } from './lib/multiple_data.ts';
 
 const markdown_start = `
 See:
@@ -17,9 +17,9 @@ const markdown = `* For {title}:
  *
  * This function is called once at load time.
  */
-function finalizePage() {
+function finalizePage(specs: Family) {
     // Generate a single chose for a specification
-    const createChoice = (part :specs.Part): string => {
+    const createChoice = (part :Part): string => {
         const pattern: string = '<input type="checkbox" name="{short_name}" id="{short_name}"><label for="{short_name}">{title}</label><br>  ';
         return pattern
                 .replaceAll('{short_name}', part.short_name)
@@ -50,11 +50,12 @@ function finalizePage() {
 }
 
 /**
- * Event handler to generate the Markdown snippets.
+ * Event handler to generate the Markdown snippets for a specific family.
  *
  * @param _e
+ * @param specs
  */
-async function go(_e: Event) {
+async function go(_e: Event, specs: Family) {
     try {
         // Get the data from the HTML
         const number   = document.getElementById('number') as HTMLInputElement;
@@ -73,14 +74,17 @@ async function go(_e: Event) {
         // These are the possible specs
         // Filter using the corresponding checkbox and see if it has been checked.
         // If yes, then the corresponding path should be used
-        const parts: specs.Part[] = specs.parts.filter((part: specs.Part): boolean => {
+        const parts: Part[] = specs.parts.filter((part: Part): boolean => {
             const choice = document.getElementById(part.short_name) as HTMLInputElement;
             return !(choice === null || choice.checked === false);
         });
 
         const URLs :preview_links.URLs[] = await preview_links.get_data(url, service.value, true, parts.map((part) => part.path));
         const final = URLs.reduce((accumulator: string, currentValue: preview_links.URLs, currentIndex: number): string => {
-            return accumulator + markdown.replace('{title}', parts[currentIndex].title).replace('{preview}', currentValue.new).replace('{diff}', currentValue.diff);
+            return accumulator + markdown
+                                    .replace('{title}', parts[currentIndex].title)
+                                    .replace('{preview}', currentValue.new)
+                                    .replace('{diff}', currentValue.diff);
         }, '');
 
         // This is the place for the generated output
@@ -92,9 +96,30 @@ async function go(_e: Event) {
 }
 
 globalThis.addEventListener('load', () => {
-    finalizePage();
-    const go_button = document.getElementById('go');
-    if (go_button) {
-        go_button.addEventListener('click', go);
+    // Find the reference to the family name in the data-preview attribute
+    // of the html element.
+    try {
+        const html: HTMLElement | null = document.getElementsByTagName('html').item(0);
+        if (html === null) {
+            throw new Error('No html element???');
+        }
+
+        const id = html.dataset.preview;
+        if (id == undefined) {
+            throw new Error('No family id provided');
+        }
+
+        // If the specs are not found, an exception is raised in the findFamily function
+        const specs: Family = findFamily(id);
+
+        // As its name suggests: finalize the page, ie, set the title, and generate the choices
+        finalizePage(specs);
+
+        const go_button = document.getElementById('go');
+        if (go_button) {
+            go_button.addEventListener('click', (e) => go(e, specs));
+        }
+    } catch(e) {
+        alert(`${e}`)
     }
 });
