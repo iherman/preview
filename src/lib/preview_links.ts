@@ -1,17 +1,17 @@
 // deno-lint-ignore-file no-namespace
 export namespace constants {
-    export const statically: string = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
-    export const githack: string = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
+    export const statically  : string = 'https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}';
+    export const githack     : string = 'https://raw.githack.com/{owner}/{repo}/{branch}/{file}';
 
-    export const GITHACK: string = "githack";
-    export const STATICALLY: string = "statically";
+    export const GITHACK     : string = "githack";
+    export const STATICALLY  : string = "statically";
 
-    export const old_version: string = 'https://{owner}.github.io/{repo}/{file}';
-    export const gh_api: string = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
-    export const html_diff: string = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
-    export const spec_gen: string = 'https://labs.w3.org/spec-generator/?type=respec&url={url}'
+    export const old_version : string = 'https://{owner}.github.io/{repo}/{file}';
+    export const gh_api      : string = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
+    export const html_diff   : string = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
+    export const spec_gen    : string = 'https://labs.w3.org/spec-generator/?type=respec&url={url}'
 
-    export const markdown: string = `
+    export const markdown    : string = `
 See:
 
 * [Preview]({preview})
@@ -35,7 +35,7 @@ export interface URLs {
     diff :string;
 }
 
-// to make typescript happy
+// to make typescript happy...
 interface Octo {
     head : {
         repo: {
@@ -99,6 +99,7 @@ function get_urls(main_repo: Repo, octocat: Octo, service: string, respec: boole
         diff : constants.html_diff.replace('{old}',old_spec).replace('{new}', new_spec)
     }
 }
+
 
 /**
  * Get the preview and html diff URLs for a PR.
