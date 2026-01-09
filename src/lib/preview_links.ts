@@ -9,7 +9,7 @@ export namespace constants {
     export const old_version : string = 'https://{owner}.github.io/{repo}/{file}';
     export const gh_api      : string = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
     export const html_diff   : string = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
-    export const spec_gen    : string = 'https://labs.w3.org/spec-generator/?type=respec&url={url}'
+    export const spec_gen: string     = 'https://www.w3.org/publications/spec-generator/?type=respec&url={url}'
 
     export const markdown    : string = `
 See:
