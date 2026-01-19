@@ -1,4 +1,4 @@
-(function(e){e.statically="https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}",e.githack="https://raw.githack.com/{owner}/{repo}/{branch}/{file}",e.GITHACK="githack",e.STATICALLY="statically",e.old_version="https://{owner}.github.io/{repo}/{file}",e.gh_api="https://api.github.com/repos/{owner}/{repo}/pulls/{number}",e.html_diff="https://services.w3.org/htmldiff?doc1={old}&doc2={new}",e.spec_gen="https://labs.w3.org/spec-generator/?type=respec&url={url}",e.markdown=`
+(function(e){e.statically="https://cdn.statically.io/gh/{owner}/{repo}/{branch}/{file}",e.githack="https://raw.githack.com/{owner}/{repo}/{branch}/{file}",e.GITHACK="githack",e.STATICALLY="statically",e.old_version="https://{owner}.github.io/{repo}/{file}",e.gh_api="https://api.github.com/repos/{owner}/{repo}/pulls/{number}",e.html_diff="https://services.w3.org/htmldiff?doc1={old}&doc2={new}",e.spec_gen="https://www.w3.org/publications/spec-generator/?type=respec&url={url}",e.markdown=`
 See:
 
 * [Preview]({preview})
