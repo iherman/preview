@@ -27,6 +27,11 @@ export const epub: Family = {
             short_name: "epub-ann",
         },
         {
+            path: "epub34/annotations-vocab/index.html",
+            title: "EPUB 3 Annotations Vocabulary",
+            short_name: "epub-ann-vocab",
+        },
+        {
             path: "wg-notes/annotations-ucr/index.html",
             title: "EPUB Annotations Use Cases and Requirements",
             short_name: "epub-ann-ucr",
