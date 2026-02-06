@@ -48,7 +48,7 @@ export const epub: Family = {
         },
         {
             path: 'epub34/a11y/index.html',
-            title: 'EPUB Accessibility 1.1.1',
+            title: 'EPUB Accessibility 1.2',
             short_name: 'a11y',
         },
         {
