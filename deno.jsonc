@@ -1,8 +1,8 @@
 {
   "name"            : "@iherman/preview",
-  "version"         : "1.0.2",
+  "version"         : "1.0.3",
   "description"     : "Generation of preview URL-s for a PR",
-  "date"            : "2026-01-09",
+  "date"            : "2026-02-26",
   "license"         : "W3C-20150513",
   "author"          : "Ivan Herman <ivan@w3.org>",
   "compilerOptions" : {
@@ -44,6 +44,6 @@
     //   "dependencies" : ["family", "generic", "package"]
     // },
 
-    "test_family" : "deno run -A src/family.ts 2671"
+    "test_family" : "deno run -A src/family.ts 2935"
   }
 }

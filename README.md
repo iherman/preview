@@ -36,16 +36,16 @@ deno task generic
 ```
 
 which installs the `docs/assets/js/preview.js`. That is used by the HTML interface in `docs/index.html` or,
-on the Web, in https://iherman.github.io/preview/. 
+on the Web, in https://iherman.github.io/preview/.
 
 ### Multi-document repositories, a.k.a. "family" of recommendation
 
 The generic case is prepared to the situation where the "main" file to be
-previewed is called `index.html` on the top level. In other words, it reflects the "one repository — one document" 
+previewed is called `index.html` on the top level. In other words, it reflects the "one repository — one document"
 model. However, there are cases where _one_ repository is used for many documents in parallel; this is the case,
 for example, of the [EPUB 3 Recommendation repository](https://github.com/w3c/epub-specs/), which is used for the parallel
-development of numerous documents. The difference is that the exact path for each document must be known and used to 
-generate the final URLs. 
+development of numerous documents. The difference is that the exact path for each document must be known and used to
+generate the final URLs.
 
 (Note that this is the case where the GitHub "PR preview" application also fails. In other words, for the development of
 EPUB, this tool _is the only_ one that can be used to put preview statements in the PR comments.)

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-import-prefix
 import * as preview_links          from './lib/preview_links.ts'
 import { findFamily, type Family } from './lib/multiple_data.ts';
 import { Command }                 from 'npm:commander@12.1.0';
@@ -32,7 +33,7 @@ async function main(): Promise<void> {
     const options = program.opts();
 
     if(program.args.length === 0) {
-        console.error('preview error: no PR number has been provided; exciting')
+        console.error('preview error: no PR number has been provided; exiting')
         Deno.exit(-1)
     } else {
         const id = options.family || 'epub';

@@ -6,10 +6,11 @@ export namespace constants {
     export const GITHACK     : string = "githack";
     export const STATICALLY  : string = "statically";
 
-    export const old_version : string = 'https://{owner}.github.io/{repo}/{file}';
+    export const gh_io       : string = 'https://{owner}.github.io/{repo}/{file}';
     export const gh_api      : string = 'https://api.github.com/repos/{owner}/{repo}/pulls/{number}';
     export const html_diff   : string = 'https://services.w3.org/htmldiff?doc1={old}&doc2={new}';
-    export const spec_gen: string     = 'https://www.w3.org/publications/spec-generator/?type=respec&url={url}'
+    export const spec_gen    : string = 'https://www.w3.org/publications/spec-generator/?type=respec&url={url}';
+    export const gh_raw      : string = 'https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{file}';
 
     export const markdown    : string = `
 See:
@@ -60,7 +61,7 @@ function get_urls(main_repo: Repo, octocat: Octo, service: string, respec: boole
     * The URL used in the spec generator must be percent encoded
     */
     const encodeurl = (url :string) :string => {
-        return url.replace(/\?/g,'%3F').replace(/&/g,'%26')
+        return url.replace(/\?/g,'%3F').replace(/&/g,'%26').replace(/\//g, '%2F')
     }
 
     // Get the data for the repository of the submission
@@ -77,25 +78,31 @@ function get_urls(main_repo: Repo, octocat: Octo, service: string, respec: boole
 
     // Get the new version's URL
     const service_url = (service === constants.GITHACK ? constants.githack : constants.statically);
-    const new_version :string = service_url
+    const new_version_preview :string = service_url
         .replace('{owner}', submission_repo.owner)
         .replace('{repo}', submission_repo.repo)
         .replace('{branch}', submission_branch.branch)
         .replace('{file}', path);
 
+    const new_version_source :string = constants.gh_raw
+        .replace("{owner}", submission_repo.owner)
+        .replace("{repo}", submission_repo.repo)
+        .replace("{branch}", submission_branch.branch)
+        .replace("{file}", path);
+
     // Get the original versions' URL (used for the diff)
-    const old_version :string = constants.old_version
+    const old_version_preview :string = constants.gh_io
         .replace('{owner}', main_repo.owner)
         .replace('{repo}', main_repo.repo)
         .replace('{file}', path);
 
     // If we the sources are in ReSpec, the URLs used in the HTML diff must be a call out to the spec generator
     // to generate the final HTML on the fly. Note that the URLs must be percent encoded.
-    const new_spec = respec ? encodeurl(constants.spec_gen.replace('{url}', new_version)) : new_version;
-    const old_spec = respec ? encodeurl(constants.spec_gen.replace('{url}', old_version)) : old_version;
+    const new_spec = respec ? encodeurl(constants.spec_gen.replace('{url}', new_version_source)) : new_version_preview;
+    const old_spec = respec ? encodeurl(constants.spec_gen.replace('{url}', old_version_preview)) : old_version_preview;
 
     return {
-        new  : new_version,
+        new  : new_version_preview,
         diff : constants.html_diff.replace('{old}',old_spec).replace('{new}', new_spec)
     }
 }

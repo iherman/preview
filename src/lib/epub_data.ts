@@ -23,18 +23,18 @@ export const epub: Family = {
         },
         {
             path: "epub34/annotations/index.html",
-            title: "EPUB 3 Annotations",
-            short_name: "epub-ann",
+            title: "EPUB Annotations 1.0",
+            short_name: "epub-anno",
         },
         {
             path: "epub34/annotations-vocab/index.html",
-            title: "EPUB 3 Annotations Vocabulary",
-            short_name: "epub-ann-vocab",
+            title: "EPUB Annotations Vocabulary 1.0",
+            short_name: "epub-anno-vocab",
         },
         {
             path: "wg-notes/annotations-ucr/index.html",
             title: "EPUB Annotations Use Cases and Requirements",
-            short_name: "epub-ann-ucr",
+            short_name: "epub-anno-ucr",
         },
         {
             path: 'wg-notes/multi-rend/index.html',
