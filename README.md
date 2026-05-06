@@ -87,9 +87,9 @@ In other words, the HTML file looks as follows:
 
 To install a different family of recommendations:
 
-- Clone the `./src/lib/epub_data.ts` file and modify it to match the new family of specification. The `id` field in the data is used in the command line and/or as the value of the data attribute for HTML.
-- Modify the `./src/lib/multiple_data.ts` file by importing the newly created module, and add its reference to the `family` array.
-- Optionally, copy or rename the `./docs/epub.html` file to something more appropriate for the family; modify the `data-preview` attribute to refer to the new family
+- Clone one of the JSON files in the `./src/lib/families` file and modify it to match the new family of specification. The `id` field in the data is used in the command line and/or as the value of the data attribute for HTML.
+- Modify the `./src/lib/family_data.ts` file by importing the newly created module, and add its reference to the `families` array. Copy-and-paste, sort of.
+- Optionally, copy or rename, e.g., the `./docs/epub.html` file to something more appropriate for the family; modify the `data-preview` attribute to refer to the new family
 
 ## Doing everything remotely
 
@@ -107,7 +107,7 @@ deno run jsr:@iherman/preview/family --family familyID [PR number]
 
 for the family case, respectively.
 
-As for the HTML on a local browser (or on another server), the HTML file can as follows
+As for the HTML on a local browser (or on another server), the HTML file can do as follows
 
 
 ```html

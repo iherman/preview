@@ -1,5 +1,5 @@
 import * as preview_links                     from './lib/preview_links.ts';
-import { findFamily, type Family, type Part } from './lib/multiple_data.ts';
+import { findFamily, type Family, type Part } from './lib/family_data.ts';
 
 const markdown_start = `
 See:
