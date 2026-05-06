@@ -82,9 +82,9 @@ async function go(_e: Event, specs: Family) {
         const URLs :preview_links.URLs[] = await preview_links.get_data(url, service.value, true, parts.map((part) => part.path));
         const final = URLs.reduce((accumulator: string, currentValue: preview_links.URLs, currentIndex: number): string => {
             return accumulator + markdown
-                                    .replace('{title}', parts[currentIndex].title)
-                                    .replace('{preview}', currentValue.new)
-                                    .replace('{diff}', currentValue.diff);
+                    .replace('{title}', parts[currentIndex].title)
+                    .replace('{preview}', currentValue.new)
+                    .replace('{diff}', currentValue.diff);
         }, '');
 
         // This is the place for the generated output

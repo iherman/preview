@@ -1,3 +1,8 @@
+//
+// The type definitions are put here (and not kept in multiple_data.ts) to avoid a circular
+// definition via the specific dbw_data.ts and epub_data.ts
+//
+
 export interface Part {
     // Path within the repository
     path       : string;
@@ -12,14 +17,14 @@ export interface Part {
 
 export interface Family {
     // Identification of the family; it is used to locate the family
-    // to be displayed. If missing, the `family` is used. 
+    // to be displayed. If missing, the `family` is used.
     // Search is done in case independent manner.
     id        ?: string;
 
     // This is the identification string of the family; it is
     // used as a title in the preview page
     family     : string;
- 
+
     // The usual strings identifying a GitHub repository...
     repo_owner : string;
     repo_name  : string;
