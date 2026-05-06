@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en-US" data-preview="epub">
     <head>
-        <meta charset='utf-8'>
+        <meta charset="utf-8">
         <title>{title} pr preview</title>
-        <link rel='stylesheet' href='https://iherman.github.io/preview/assets/css/preview.css'/>
-        <script src='https://iherman.github.io/preview/assets/js/preview_family.js'></script>
+        <link rel="stylesheet" href="https://iherman.github.io/preview/assets/css/preview.css"/>
+        <script src="https://iherman.github.io/preview/assets/js/preview_family.js"></script>
         <style>
             #form {
                 display: grid;
@@ -32,7 +32,7 @@
         <main>
             <p>This form generates markdown snippet that can be added to the PR comment manually to provide a preview of the new version as well as a diff file. It is poor man’s alternative to the more elaborate PR-preview GitHub App, which cannot be used for several documents at a time:</p>
 
-            <div id='form'>
+            <div id="form">
                 <div>
                     <label for="number">PR number: </label> <input name="number" id="number" size="16" min="0" max="10000" type="number" step="1">
                 </div>
@@ -49,15 +49,15 @@
                 </div>
 
                 <label for="markdown" id="label_markdown">GitHub comment:</label>
-                <textarea rows=20 name=markdown id=markdown wrap=soft></textarea>
+                <textarea rows="20" name="markdown" id="markdown" wrap="soft"></textarea>
 
-                <button id='go'>Go!</button>
+                <button id="go">Go!</button>
             </div>
 
             <p style="font-size: 80%;"><sup>(*)</sup><a href="https://raw.githack.com">Githack</a> does not cache the content it but must be “initiated” by using the PR GitHub reference at least once on its <a href="https://raw.githack.com">home page</a> manually before the URL becomes “live”. The <a href="https://cdn.statically.io">Statically</a> URL is live at once, but HTML files are cached for a day. I.e., if the intention is to make frequent commits on the material in PR, better use githack, statically otherwise…</p>
         </main>
-        <footer class='copyright'>
-            <p >This client runs the <a href='https://github.com/iherman/preview/'>preview</a> script, published on GitHub. Copyright © 2026 <a href='https://www.ivan-herman.net/'>Ivan Herman</a>. </p>
+        <footer class="copyright">
+            <p >This client runs the <a href="https://github.com/iherman/preview/">preview</a> script, published on GitHub. Copyright © 2026 <a href="https://www.ivan-herman.net/">Ivan Herman</a>. </p>
         </footer>
     </body>
 </html>

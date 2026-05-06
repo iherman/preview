@@ -122,7 +122,7 @@ As for the HTML on a local browser (or on another server), the HTML file can as 
 </html>
 ```
 
-(The javascript file has been minimized and is small. No reason the bother with a CDN.)
+(The javascript file has been minimized and is small. No reason to bother with a CDN.)
 
 ## Notes
 

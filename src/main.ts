@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-import-prefix
 import * as preview_links from "./lib/preview_links.ts";
-import { Command } from "npm:commander@12.1.0";
+import { Command }        from "npm:commander@12.1.0";
 
 /**
  * Entry point to the generic CLI case. The command line arguments are used
@@ -31,7 +31,7 @@ async function main(): Promise<void> {
     } else {
         // noinspection DuplicatedCode
         const url = program.args[0];
-        let service = options.service || "statically";
+        let service = options.service || "githack";
 
         if (
             service !== preview_links.constants.GITHACK &&

@@ -1,8 +1,8 @@
 {
   "name"            : "@iherman/preview",
-  "version"         : "1.0.3",
+  "version"         : "1.0.4",
   "description"     : "Generation of preview URL-s for a PR",
-  "date"            : "2026-02-26",
+  "date"            : "2026-05-06",
   "license"         : "W3C-20150513",
   "author"          : "Ivan Herman <ivan@w3.org>",
   "compilerOptions" : {
@@ -16,34 +16,45 @@
   },
 
   "tasks" : {
-    "family"      : {
-      "description" : "Generate the browser modules for the \"family\" HTML page.",
-      "command"     : "deno bundle -o docs/assets/js/preview_family.js --platform=browser --minify src/browser_family.ts"
-    },
+      "family": {
+          "description": "Generate the browser modules for the \"family\" HTML page.",
+          "command": "deno bundle -o docs/assets/js/preview_family.js --platform=browser --minify src/browser_family.ts",
+      },
 
-    "generic"      : {
-      "description": "Generate the browser modules for the general HTML page.",
-      "command": "deno bundle -o docs/assets/js/preview.js --platform=browser --minify src/browser.ts"
-    },
+      "generic": {
+          "description": "Generate the browser modules for the general HTML page.",
+          "command": "deno bundle -o docs/assets/js/preview.js --platform=browser --minify src/browser.ts",
+      },
 
-    // In general, this is the real meat for browser installation
-    "browser"      : {
-      "description"  : "Build both Web Modules",
-      "dependencies" : ["family", "generic"]
-    },
+      // In general, this is the real meat for browser installation
+      "browser": {
+          "description": "Build both Web Modules",
+          "dependencies": ["family", "generic"],
+      },
 
-    "package"          : {
-      "description" : "Generate an npm compatible package into the '.npm' directory, that can then be published on npm",
-      "command"     : "deno run -A tools/build_npm.ts"
-    },
+      "compile_generic": "deno compile -A --output ./bin/preview src/main.ts ",
+      "compile_family": "deno compile -A --output ./bin/previewFamily src/family.ts",
 
-    // The complete build before pushing things up to repositories
-    // Commented out... in reality, the npm version is not used, unnecessary to generate it.
-    // Left it in there as a historical memento :-)
-    // "build"          : {
-    //   "dependencies" : ["family", "generic", "package"]
-    // },
+      "compile": {
+          "description": "Compile local scripts to 'bin'",
+          "dependencies": ["compile_generic", "compile_family"],
+      },
 
-    "test_family" : "deno run -A src/family.ts 2935"
+      "test_epub": "deno run -A src/family.ts 2935",
+      "test_dbw": "deno run -A src/family.ts -f dbw 1",
+
+      // Commented out... in reality, the npm version is not used, unnecessary to generate it.
+      // The "tools" folder has been moved to the Attic
+      // Left it in there as a historical memento :-)
+
+      // "package"          : {
+      //   "description" : "Generate an npm compatible package into the '.npm' directory, that can then be published on npm",
+      //   "command"     : "deno run -A tools/build_npm.ts"
+      // },
+
+      // The complete build before pushing things up to repositories
+      // "build"          : {
+      //   "dependencies" : ["family", "generic", "package"]
+      // },
   }
 }

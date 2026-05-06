@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en-US">
     <head>
-        <meta charset='utf-8'>
+        <meta charset="utf-8">
         <title>pr preview</title>
-        <link rel='stylesheet' href='https://iherman.github.io/preview/assets/css/preview.css' />
-        <script src='https://iherman.github.io/preview/assets/js/preview.js'></script>
+        <link rel="stylesheet" href="https://iherman.github.io/preview/assets/css/preview.css" />
+        <script src="https://iherman.github.io/preview/assets/js/preview.js"></script>
         <style>
             #form {
                 display: grid;
@@ -26,7 +26,7 @@
 
             <p>This simple version of PR makes the assumption that the file to be previewed in the pull request is called <code>index.html</code>.</p>
 
-            <div id='form'>
+            <div id="form">
                 <label for="url">PR URL: </label> <input name="url" id="url" size="60" type="text">
 
                 <label for="text">Plain HTML file? </label> <input id="text" name="text" type="checkbox" required>
@@ -38,16 +38,16 @@
                 </select>
 
                 <label for="markdown">Use this in your GitHub comment:</label>
-                <textarea rows=10 name=markdown id=markdown wrap=soft></textarea>
+                <textarea rows="10" name="markdown" id="markdown" wrap="soft"></textarea>
 
-                <button id='go'>Go!</button>
+                <button id="go">Go!</button>
             </div>
             <p>(Note the current version works only with <a href="https://respec.org/docs/">ReSpec</a> and plain HTML document; default is in ReSpec. I do not know to generate a preview version of <a href="https://speced.github.io/bikeshed/">Bikeshed</a>.)</p>
 
             <p style="font-size: 80%;"><sup>(*)</sup><a href="https://raw.githack.com">Githack</a> does not cache the content it but must be “initiated” by using the PR GitHub reference at least once on its <a href="https://raw.githack.com">home page</a> manually before the URL becomes “live”. The <a href="https://cdn.statically.io">Statically</a> URL is live at once, but HTML files are cached for a day. I.e., if the intention is to make frequent commits on the material in PR, better use githack, statically otherwise…</p>
         </main>
-        <footer class='copyright'>
-            <p >This client runs the <a href='https://github.com/iherman/preview/'>preview</a> script, published on GitHub. Copyright © 2026 <a href='https://www.ivan-herman.net/'>Ivan Herman</a>. </p>
+        <footer class="copyright">
+            <p >This client runs the <a href="https://github.com/iherman/preview/">preview</a> script, published on GitHub. Copyright © 2026 <a href="https://www.ivan-herman.net/">Ivan Herman</a>. </p>
         </footer>
     </body>
 </html>

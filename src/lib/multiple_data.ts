@@ -2,24 +2,25 @@
  * This is what links the generic solution for families to a specific one.
  * At this moment, epub is the only existing family.
  */
-import type { Family } from "./multiple_type.ts";
+import type { Family }       from "./multiple_type.ts";
 export type { Family, Part } from "./multiple_type.ts";
 
 
 
 // Defining a new family involves adding an import and adding the imported
 // value to the array of available families.
-import { epub }              from "./epub_data.ts";
+import { epub } from "./epub_data.ts";
+import { dbw }  from "./dbw_data.ts";
 
-const families: Family[] = [ epub ];
+const families: Family[] = [ epub, dbw ];
 
 
 /* ************************************************************************** */
 /**
  * Find the family of specification identified by `id`
- * 
- * @param id 
- * @returns 
+ *
+ * @param id
+ * @returns
  */
 export function findFamily(id: string): Family {
     const output: Family | undefined = families.find((f: Family): boolean => {

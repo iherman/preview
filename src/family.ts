@@ -45,7 +45,7 @@ async function main(): Promise<void> {
 
             const url = `https://github.com/${specs.repo_owner}/${specs.repo_name}/pull/${pr_num}`;
 
-            let service = options.service || 'statically';
+            let service = options.service || 'githack';
             if (service !== preview_links.constants.GITHACK && service !== preview_links.constants.STATICALLY) {
                 console.warn(`Unknown service ${service}; using statically`);
                 service = preview_links.constants.STATICALLY;
@@ -55,9 +55,9 @@ async function main(): Promise<void> {
 
             const final = URLs.reduce((accumulator: string, currentValue: preview_links.URLs, currentIndex: number): string => {
                 return accumulator + markdown
-                                        .replace('{title}', specs.parts[currentIndex].title)
-                                        .replace('{preview}', currentValue.new)
-                                        .replace('{diff}', currentValue.diff);
+                    .replace('{title}', specs.parts[currentIndex].title)
+                    .replace('{preview}', currentValue.new)
+                    .replace('{diff}', currentValue.diff);
             }, '');
             console.log(markdown_start + final);
         } catch (e) {
