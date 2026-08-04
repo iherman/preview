@@ -50,6 +50,11 @@
             "short_name": "a11y"
         },
         {
+            "path": "epub34/a11y-explain/index.html",
+            "title": "EPUB Accessibility 1.2 Explainer",
+            "short_name":"epub-a11y-explain-12"
+        },
+        {
             "path": "epub34/a11y-tech/index.html",
             "title": "EPUB Accessibility Techniques",
             "short_name": "a11y-tech"
